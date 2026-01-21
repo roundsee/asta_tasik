@@ -1,0 +1,207 @@
+/*Author : Wibisono
+Purpose : Css for Menu Kasir Waroeng Steak Group
+Year : 2022
+*/
+
+
+
+  .menupilihan{
+    background-color:#fefefe;
+    text-align:center;
+    margin: 1rem auto;
+    border-style: outset;
+    border-color: ghostwhite;
+    padding: .2rem;
+    /*width: 160px;*/
+    box-shadow: 2px 2px 7px grey;
+    border-radius: 15px;
+  }
+  .menunama{
+    padding-top: 3px;
+    height: 48px;
+    line-height: 1.4rem;
+    /*font-size: 95%;*/
+    color: black;
+    background-color: lightgoldenrodyellow;
+    margin: 0 -1 0 -2;
+  }
+
+  .menuharga_1{
+    background-color: whitesmoke;
+    line-height: 20px;
+    text-align: right;
+    /*width: 90px;*/
+    /*margin-bottom: .1rem;*/
+    color: black;
+    font-weight: 700;
+    background-color: white;
+    margin: 0 .3rem .1rem .3rem;
+  }
+  .menuharga{
+    margin: 0 0 1px;
+    height: 20px;
+    background-color: white;
+    color: grey;
+    padding-top: 3px;
+  }
+  .tombol{
+    box-shadow: 2px 2px 5px grey;
+  }  
+  .tombol1{
+    box-shadow: 2px 2px 5px grey;
+    border-bottom-right-radius: 5px!important;
+    margin-left: 5px!important;
+  }
+  .tombol2{
+    font-size: 130%!important;
+    border-radius: 25px;
+    box-shadow: 2px 2px 5px black;
+    border-bottom-right-radius: 5px!important;
+    margin-left: 5px!important;
+  }
+  .row {
+    padding: 5px;
+    color: black;
+  }
+  .table{
+    margin-bottom: 2px;
+  }
+  .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 2px 10px;
+  }
+  .form-group {
+    margin-bottom: 2px;
+  }  
+
+  .skin-green .wrapper, .skin-green .main-sidebar, .skin-green .left-side {
+    background-color: transparent;
+  }
+/*Tabel Responsive 1*/
+.table-container {
+  overflow: auto;
+}
+
+.box-poly{
+  border-radius: 18px;
+  background: #feffff;
+  box-shadow: inset 5px 5px 10px #c1c2c2,
+  inset -5px -5px 10px #ffffff;
+}
+
+.box-poly-up{
+  border-radius: 18px;
+  background: linear-gradient(145deg, #ffffff, #e5e6e6);
+  box-shadow:  5px 5px 10px #c1c2c2,
+  -5px -5px 10px #ffffff;
+}
+
+.box-poly-kotak {
+  border-radius: 5px;
+  background: #feffff;
+  box-shadow: inset 5px -5px 10px #939494,
+  inset -5px 5px 10px #ffffff;
+}
+.menupilihan_alatbayar{
+  background-color:#fcfcfc;
+  text-align:center;
+  margin: 1rem auto;
+  border-style: outset;
+  border-color: ghostwhite;
+  padding: .2rem;
+  /*width: 160px;*/
+  box-shadow: 7px 7px 10px grey;
+  border-radius: 15px;
+}
+.menupilihan_sub_alatbayar{
+  background-color:#fcfcfc;
+  text-align:center;
+  margin: 1rem auto;
+  border-style: outset;
+  border-color: ghostwhite;
+  padding: .2rem;
+  /*width: 160px;*/
+  box-shadow: 7px 7px 10px grey;
+  border-radius: 15px;
+}
+.menunama_alatbayar{
+  padding-top: 3px;
+  height: 28px;
+  line-height: 1.4rem;
+  /*font-size: 95%;*/
+  color: black;
+  background-color: lightgoldenrodyellow;
+  border-radius: 0 0 15px 15px;
+}
+
+.menunama_sub_alatbayar{
+  padding-top: 13px;
+  height: 48px;
+  line-height: 1.1rem;
+  /*font-size: 95%;*/
+  color: black;
+  background-color: lightgoldenrodyellow;
+  border-radius: 0 0 15px 15px;
+  font-size: 95%;
+  font-weight: 600;
+}
+.menupilihan_aplikasi{
+  background-color:#fcfcfc;
+  text-align:center;
+  margin: 1rem auto;
+  border-style: outset;
+  border-color: ghostwhite;
+  padding: .2rem;
+  width: 130px;
+  box-shadow: 7px 7px 10px grey;
+  border-radius: 15px;
+}
+
+.menunama_aplikasi{
+  padding-top: 3px;
+  height: 28px;
+  line-height: 1.4rem;
+  /*font-size: 95%;*/
+  color: black;
+  background-color: lightgoldenrodyellow;
+}
+
+#satu, #dua, #tiga, #alatbayar, #aplikasi, #payment
+{
+  position: absolute;
+  height: 100px;
+}
+#satu
+{
+  left: 0px;
+  top: 0px;
+  background-color:whitesmoke;
+  z-index: 1;
+
+}
+#aplikasi
+{
+  width: 670px;
+  height: 240px;
+  left: 450px;
+  top: 50px;
+  background-color:ghostwhite;
+  z-index: 3;
+}
+#payment
+{
+  width: 800px;
+  height: 550px;
+  left: 250px;
+  top: 50px;
+  background-color:ghostwhite;
+  z-index: 2;
+}
+#alatbayar
+{
+  width: 440px;
+height: 300px;
+left: 350px;
+top: 20px;
+  background-color:ghostwhite;
+  z-index: 4;
+}

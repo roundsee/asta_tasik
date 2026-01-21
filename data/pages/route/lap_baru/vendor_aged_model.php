@@ -1,0 +1,775 @@
+<?php
+
+include "../../../../config/koneksi.php";
+include "../../../../config/fungsi_rupiah.php";
+include "../../../../config/library.php";
+include "../../../../config/fungsi_indotgl.php";
+
+
+session_start();
+
+$login_hash = $_SESSION['login_hash'];
+$en = $_SESSION['employee_number'];
+if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
+  echo "<link href='../../../../dist/style.css' rel='stylesheet' type='text/css'>
+  <center>Untuk mengakses modul, Anda harus login <br>";
+  echo "<div class='wrapper'><a href=../../../../index.php><b>LOGIN</b></a></div></center>";
+} else {
+
+  $judulform = "Vendor Aged";
+
+  $data = 'lap_baru';
+  $rute = 'list_lap_baru';
+  $aksi = 'aksi_list_lap_baru';
+
+  $tabel = 'mutasi_stok';
+  $f1 = 'tgl';
+  $f2 = 'kd_cus';
+  $f3 = 'kd_brg';
+  $f4 = 'satuan';
+  $f5 = 'qty_awal';
+  $f6 = 'nilai_awal';
+  $f7 = 'qty_beli';
+  $f8 = 'nilai_beli';
+  $f9 = 'qty_beli_retur';
+  $f10 = 'nilai_beli_retur';
+  $f11 = 'qt_tersedia';
+  $f12 = 'nilai_tersedia';
+  $f13 = 'harga_rata';
+  $f14 = 'qt_jual';
+  $f15 = 'nilai_jual';
+  $f16 = 'hpp_jual';
+  $f17 = 'qt_akhir';
+  $f18 = 'nilai_akhir';
+  $f19 = 'stok_opname';
+  $f20 = 'nilai_opname';
+
+  $j1 = 'Tanggal';
+  $j2 = 'Kode Customer';
+  $j3 = 'Kode Barang';
+  $j4 = 'Satuan';
+  $j5 = 'Qty Awal';
+  $j6 = 'Nilai Awal';
+  $j7 = 'Qty Beli';
+  $j8 = 'Nilai Beli';
+  $j9 = 'Qty Beli Retur';
+  $j10 = 'Nilai Beli Retur';
+  $j11 = 'Qty Tersedia';
+  $j12 = 'Nilai Tersedia';
+  $j13 = 'Harga Rata-Rata';
+  $j14 = 'Qty Jual';
+  $j15 = 'Nilai Jual';
+  $j16 = 'HPP Jual';
+  $j17 = 'Qty Akhir';
+  $j18 = 'Nilai Akhir';
+  $j19 = 'Stok Opname';
+  $j20 = 'Nilai Opname';
+
+
+  $tgl_awal = $_GET['tgl_awal'];
+  $filter = $_GET['filter'];
+  $nilai = $_GET['nilai'];
+  $tipe_laporan = $_GET['tipe_laporan'];
+  $supplier_string = $_GET['supplier'] ?? '';
+  $supplier_array = array_filter(explode(',', $supplier_string)); // will be empty array if no selection
+
+  if (in_array('__select_all__', $supplier_array) || empty($supplier_array)) {
+    $supplier_filter = "";
+  } else {
+
+    // Sanitize supplier codes
+    $escaped_supplier = array_map(function ($supp) use ($koneksi) {
+      return "'" . mysqli_real_escape_string($koneksi, $supp) . "'";
+    }, $supplier_array);
+
+    // Create IN clause
+    $supplier_in = implode(',', $escaped_supplier);
+
+    $supplier_filter = "AND pembelian_invoice.kd_supp IN ($supplier_in)";
+  }
+
+
+  // $tgl_terakhir=$tgl_akhir+interval 1 day;
+
+  // echo '<br/><br/><br/>';
+
+  // echo "<br/>".$tgl_awal;
+  // echo "<br/>".$tgl_akhir;
+  // echo "<br/>".$filter;
+  // echo "<br/>".$nilai;
+
+  if ($filter == 'outlet') {
+    $kondisi = "AND kd_unit='$nilai'";
+    $query = mysqli_query($koneksi, "SELECT * FROM unit_kerja WHERE kd_cus='$nilai' ");
+    $q1 = mysqli_fetch_array($query);
+    $judul_nilai = $q1['nama'];
+    $kondisi_join = '';
+    $kondisi_group = '';
+  } elseif ($filter == 'area') {
+    $newnilai = sprintf("%02s", $nilai);
+    $kondisi = "AND kd_cus='$nilai'";
+    $query = mysqli_query($koneksi, "SELECT * FROM pelanggan WHERE kd_cus='$nilai' ");
+    $q1 = mysqli_fetch_array($query);
+    $judul_nilai = $q1['nama'];
+    $kondisi_join = '';
+    $kondisi_group = '';
+    // $kondisi_group= ',regional';
+  } elseif ($filter == 'unitkerja') {
+    $kondisi = "AND kd_unit='$nilai'";
+    $query = mysqli_query($koneksi, "SELECT * FROM unit_kerja WHERE kd_cus='$nilai' ");
+    $q1 = mysqli_fetch_array($query);
+    $judul_nilai = $q1['nama'];
+    $kondisi_join = '';
+    $kondisi_group = '';
+  } else {
+    $kondisi = "";
+    $judul_nilai = '';
+    $kondisi_join = '';
+    $kondisi_group = '';
+  }
+
+
+  $judul = $judulform;
+  $judul2 = "";
+  $judul3 = 'Periode : ' . $tgl_awal;
+
+  // echo '<br> kondisi :'.$kondisi;
+  // echo '<br> judul Nilai :'.$judul_nilai;
+  // echo '<br> kondisi Join :'.$kondisi_join;
+
+
+  include '../header_lap_mutasi.php';
+?>
+
+  <style type="text/css">
+    div.dataTables_wrapper div.dataTables_length select {
+      width: 50;
+    }
+
+    div.dt-buttons {
+      padding-left: 20;
+    }
+
+    div.dt-container {
+      width: 800px;
+      margin: 0 auto;
+    }
+
+    .table thead th {
+      vertical-align: middle;
+    }
+
+    th {
+      text-align: center;
+
+    }
+
+    table.dataTable tfoot td {
+      /*		padding: 10px 10px!important 6px 18px;*/
+      padding-right: 1px !important;
+      background-color: beige;
+    }
+
+    .bg1 {
+      background-color: RGBA(100, 149, 237, .1);
+    }
+
+    .bg2 {
+      background-color: RGBA(100, 149, 237, .2);
+    }
+
+    .bg3 {
+      background-color: RGBA(100, 149, 237, .3);
+    }
+
+    .bg4 {
+      background-color: RGBA(100, 149, 237, .4);
+    }
+
+    .bg5 {
+      background-color: RGBA(100, 149, 237, .5);
+    }
+
+    /* CSS for loading spinner */
+    #loading-bar {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(255, 255, 255, 0.8);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .spinner-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100px;
+      height: 100px;
+      /* border: 10px solid; */
+    }
+
+    .spinner {
+      width: 100px;
+      height: 100px;
+      border: 16px solid #f3f3f3;
+      border-top: 8px solid #f8f850;
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-text {
+      margin-top: 5px;
+      font-size: 1.5rem;
+      /* Increased font size */
+      font-family: Arial, sans-serif;
+      color: #333;
+      font-weight: bold;
+      /* Added font weight */
+    }
+
+    .dot {
+      font-size: 2rem;
+      /* Match dot size to text */
+      animation: blink 1.4s infinite both;
+    }
+
+    .dot:nth-child(2) {
+      animation-delay: 0.2s;
+      animation: blink 1.4s infinite both;
+    }
+
+    .dot:nth-child(3) {
+      animation-delay: 0.4s;
+      animation: blink 1.4s infinite both;
+    }
+
+    .dot:nth-child(4) {
+      animation-delay: 0.4s;
+      animation: blink 1.4s infinite both;
+    }
+
+    .dot:nth-child(5) {
+      animation-delay: 0.4s;
+      animation: blink 1.4s infinite both;
+    }
+
+    @keyframes blink {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        opacity: 1;
+      }
+
+      40% {
+        opacity: 0;
+      }
+
+      60% {
+        opacity: 0;
+      }
+    }
+
+    #example_vendor_age_wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    #example_vendor_age {
+      min-width: 1800px;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    .wide-table th:first-child {
+      width: 30%;
+    }
+  </style>
+  <!-- <div id="loading-bar">
+    <div class="spinner-container">
+        <div class="spinner"></div>
+    </div>
+    <div class="loading-text">
+        Proses<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+    </div>
+</div> -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
+  <!-- <div class="container"> -->
+
+  <section class="content-header  wow fadeInDown" data-wow-duration=".3s" data-wow-delay=".3s">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="list-gds">
+            <b><?php echo $judulform; ?></b> <small style="font-weight: 100;">report</small>
+
+          </h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="../../main.php?route=home">Beranda</a></li>
+            <li class="breadcrumb-item active">Laporan</li>
+            <li class="breadcrumb-item active"><?php echo $judulform; ?></li>
+          </ol>
+        </div>
+
+      </div>
+
+      <br>
+      <center>
+        <h4><?php echo $judul; ?>
+          <!-- <h5><?php echo $judul2; ?></h5> -->
+          <?php echo $judul3; ?>
+          <?php echo $tipe_laporan; ?>
+        </h4>
+      </center>
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- <div class="table-responsive"> -->
+  <?php if ($tipe_laporan == 'summary') { ?>
+    <div class="table-responsive">
+
+      <table id="example_vendor_age" class="table table-bordered table-striped">
+        <thead style="background-color: lightgray;" class="elevation-2">
+          <tr>
+            <th style="width: 5%;">No</th>
+            <th>Name</th>
+            <th>Total</th>
+            <th>Current</th>
+            <th class="bg1">31 To 60</th>
+            <th class="bg2">61 To 90</th>
+            <th class="bg3">91+</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          $sql1 = mysqli_query($koneksi, "
+            SELECT supplier.nama AS nama_supplier,pembelian_invoice.kd_supp,
+                pembelian_invoice.no_invoice,
+                SUM(((pd.nilai * pd.jml) - pd.disc) + 
+                    (pembelian.ppn * (((pd.nilai * pd.jml) - pd.disc) * pembelian.tarif_ppn / 100 ))) + 
+                    pembelian_invoice.ongkir AS hargatotal,
+                (SELECT IFNULL(SUM(jumlah_payment), 0) 
+                FROM payment 
+                WHERE payment.no_invoice = pembelian_invoice.no_invoice) AS jumlah_payment,
+                DATEDIFF(CURDATE(), pembelian_invoice.tanggal_invoice) AS selisih_hari
+            FROM pembelian_invoice_detail pd
+            JOIN pembelian ON pembelian.kd_po = pd.kd_po
+            JOIN pembelian_invoice ON pembelian_invoice.no_invoice = pd.no_invoice
+            JOIN supplier ON supplier.kd_supp = pembelian_invoice.kd_supp
+            WHERE pembelian_invoice.status_payment <= 1  $supplier_filter
+            GROUP BY supplier.nama, pembelian_invoice.no_invoice;
+        ");
+
+          if (!$sql1) {
+            die("Query gagal: " . mysqli_error($koneksi));
+          }
+
+          $supplierData = [];
+          while ($s1 = mysqli_fetch_array($sql1)) {
+            $nama_supplier = $s1['nama_supplier'];
+            $hargatotal = $s1['hargatotal'];
+            $jumlah_payment = $s1['jumlah_payment'];
+            $sisa_tagihan = $hargatotal - $jumlah_payment;
+            $selisih_hari = $s1['selisih_hari'];
+
+            // Jika supplier belum ada di array, buat entry baru
+            if (!isset($supplierData[$nama_supplier])) {
+              $supplierData[$nama_supplier] = [
+                'total' => 0,
+                'no_supplier' => '',
+                'jumlah_payment' => 0,
+                'sisa' => 0,
+                'range_1_7' => 0,
+                'range_8_14' => 0,
+                'range_15_21' => 0,
+                'range_22_plus' => 0,
+                'invoices' => []
+              ];
+            }
+
+            // Menambah nilai total, jumlah payment, dan sisa tagihan
+            $supplierData[$nama_supplier]['no_supplier'] = $s1['kd_supp'];
+            $supplierData[$nama_supplier]['total'] += $sisa_tagihan;
+            $supplierData[$nama_supplier]['jumlah_payment'] += $jumlah_payment;
+            $supplierData[$nama_supplier]['sisa'] += $sisa_tagihan;
+
+            // Menghitung berdasarkan rentang hari menggunakan sisa tagihan
+            if ($selisih_hari >= 0 && $selisih_hari <= 30) {
+              $supplierData[$nama_supplier]['range_1_7'] += $sisa_tagihan;
+            } elseif ($selisih_hari >= 31 && $selisih_hari <= 60) {
+              $supplierData[$nama_supplier]['range_8_14'] += $sisa_tagihan;
+            } elseif ($selisih_hari >= 61 && $selisih_hari <= 90) {
+              $supplierData[$nama_supplier]['range_15_21'] += $sisa_tagihan;
+            } elseif ($selisih_hari > 91) {
+              $supplierData[$nama_supplier]['range_22_plus'] += $sisa_tagihan;
+            }
+
+            // Menyimpan nomor invoice
+            $supplierData[$nama_supplier]['invoices'][] = $s1['no_invoice'];
+          }
+
+          $no = 1;
+
+          // Menampilkan data per supplier
+          foreach ($supplierData as $supplier => $data) {
+            $array_supplierData = [];
+            $array_supplierData[] = $data['no_supplier'];
+            $array_new_supplier_string = implode(',', $array_supplierData);
+          ?>
+            <tr align="left">
+              <td><?php echo $no; ?></td>
+              <td style="font-weight: bold;" class="force-string"><a href="../../route/lap_baru/vendor_aged_model.php?filter=semua&nilai=semua&supplier=<?php echo $array_new_supplier_string; ?>&tipe_laporan=detail&tgl_awal=<?php echo date('Y-m-d'); ?>"><?php echo $supplier; ?></td>
+              <td align="right"><?php echo number_format($data['total']); ?></td>
+              <td align="right"><?php echo number_format($data['range_1_7']); ?></td>
+              <td class="bg1" align="right"><?php echo number_format($data['range_8_14']); ?></td>
+              <td class="bg2" align="right"><?php echo number_format($data['range_15_21']); ?></td>
+              <td class="bg3" align="right"><?php echo number_format($data['range_22_plus']); ?></td>
+            </tr>
+          <?php
+            $no++;
+          }
+          ?>
+        </tbody>
+      </table>
+    </div>
+  <?php } else if ($tipe_laporan == 'detail') { ?>
+    <div class="table-responsive">
+
+      <table id="example_vendor_age" class="table table-bordered wide-table ">
+        <thead style="background-color: lightgray;" class="elevation-2">
+          <tr>
+            <th>Name</th>
+            <th>Source</th>
+            <th>Date</th>
+            <th>Transaction Type</th>
+            <th>Total</th>
+            <th>Current</th>
+            <th class="bg1">31 To 60</th>
+            <th class="bg2">61 To 90</th>
+            <th class="bg3">91+</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          $sql1 = mysqli_query($koneksi, "
+                SELECT supplier.nama AS nama_supplier,
+                    pembelian_invoice.no_invoice,pembelian_invoice.tanggal_invoice,pembelian.kd_beli,
+                    SUM(((pd.nilai * pd.jml) - pd.disc) + 
+                        (pembelian.ppn * (((pd.nilai * pd.jml) - pd.disc) * pembelian.tarif_ppn / 100 ))) + 
+                        pembelian_invoice.ongkir AS hargatotal,
+                    (SELECT IFNULL(SUM(jumlah_payment), 0) 
+                    FROM payment 
+                    WHERE payment.no_invoice = pembelian_invoice.no_invoice) AS jumlah_payment,
+                    DATEDIFF(CURDATE(), pembelian_invoice.tanggal_invoice) AS selisih_hari
+                FROM pembelian_invoice_detail pd
+                JOIN pembelian ON pembelian.kd_po = pd.kd_po
+                JOIN pembelian_invoice ON pembelian_invoice.no_invoice = pd.no_invoice
+                JOIN supplier ON supplier.kd_supp = pembelian_invoice.kd_supp
+                WHERE pembelian_invoice.status_payment <= 1  $supplier_filter
+                GROUP BY supplier.nama, pembelian_invoice.no_invoice;
+            ");
+
+          if (!$sql1) {
+            die("Query gagal: " . mysqli_error($koneksi));
+          }
+          $suppliers_data = [];
+          while ($s1 = mysqli_fetch_array($sql1)) {
+            $supplier = $s1['nama_supplier'];
+            if (!isset($suppliers_data[$supplier])) {
+              $suppliers_data[$supplier] = [];
+            }
+            $suppliers_data[$supplier][] = $s1;
+          }
+          $totaloutstanding = 0;
+          $totalcurrent = 0;
+          $total31 = 0;
+          $total61 = 0;
+          $total91 = 0;
+          foreach ($suppliers_data as $supplier_name => $invoices) {
+            $totaloutstanding = 0;
+            $totalcurrent = 0;
+            $total31 = 0;
+            $total61 = 0;
+            $total91 = 0;
+          ?>
+            <tr align="left" style="background-color: #ced4da;">
+              <td><?php echo $supplier_name; ?></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td align="right"></td>
+              <td align="right"></td>
+              <td class="bg1" align="right"></td>
+              <td class="bg2" align="right"></td>
+              <td class="bg3" align="right"></td>
+            </tr>
+            <?php
+
+            foreach ($invoices as $invoice) {
+              $totaloutstanding += $invoice['hargatotal'] - $invoice['jumlah_payment'];
+
+            ?>
+              <tr align="left" style="background-color: #dee2e6;">
+                <td class="hide-export" style="text-align: right; color: transparent;"><?php echo $invoice['nama_supplier']; ?></td>
+                <td style="font-weight: bold;" class="force-string"><a href="../../main.php?route=purchase_order_detail&act&id=<?php echo $invoice['kd_beli']; ?>&asal=purchase_order" title="Detail"><?php echo $invoice['no_invoice']; ?></a></td>
+                <td><?php echo $invoice['tanggal_invoice']; ?></td>
+                <td>Invoice</td>
+                <td align="right"><?php echo number_format($invoice['hargatotal']); ?></td>
+                <?php if ($invoice['selisih_hari'] <= 30) {
+                  $totalcurrent += $invoice['hargatotal'] - $invoice['jumlah_payment'];
+                ?>
+                  <td align="right"><?php echo number_format($invoice['hargatotal']); ?></td>
+                  <td class="bg1" align="right">0</td>
+                  <td class="bg2" align="right">0</td>
+                  <td class="bg3" align="right">0</td>
+                <?php } else if ($invoice['selisih_hari'] <= 60) {
+                  $total31 += $invoice['hargatotal'] - $invoice['jumlah_payment'];
+                ?>
+                  <td align="right">0</td>
+                  <td class="bg1" align="right"><?php echo number_format($invoice['hargatotal']); ?></td>
+                  <td class="bg2" align="right">0</td>
+                  <td class="bg3" align="right">0</td>
+                <?php } else if ($invoice['selisih_hari'] <= 90) {
+                  $total61 += $invoice['hargatotal'] - $invoice['jumlah_payment'];
+                ?>
+                  <td align="right">0</td>
+                  <td class="bg1" align="right">0</td>
+                  <td class="bg2" align="right"><?php echo number_format($invoice['hargatotal']); ?></td>
+                  <td class="bg3" align="right">0</td>
+                <?php } else {
+                  $total91 += $invoice['hargatotal'] - $invoice['jumlah_payment']; ?>
+                  <td align="right">0</td>
+                  <td class="bg1" align="right">0</td>
+                  <td class="bg2" align="right">0</td>
+                  <td class="bg3" align="right"><?php echo number_format($invoice['hargatotal']); ?></td>
+                <?php } ?>
+              </tr>
+            <?php
+            }
+
+            $invoice_numbers = array_column($invoices, 'no_invoice');
+            $escaped_invoices = array_map(function ($invoice) use ($koneksi) {
+              return "'" . mysqli_real_escape_string($koneksi, $invoice) . "'";
+            }, $invoice_numbers);
+
+            $invoice_list = implode(',', $escaped_invoices);
+
+            $sqlminus = mysqli_query($koneksi, "
+                SELECT payment.jumlah_payment, payment.no_invoice, payment.tanggal_payment, payment.no_payment,
+                DATEDIFF(CURDATE(), payment.tanggal_payment) AS selisih_hari
+                FROM payment 
+                WHERE payment.no_invoice IN ($invoice_list)
+            ");
+
+            while ($payment = mysqli_fetch_array($sqlminus)) {
+            ?>
+              <tr align="left" style="background-color: #dee2e6;">
+                <td class="hide-export" style="text-align: right; color: transparent;"><?php echo $supplier_name; ?></td>
+                <td style="font-weight: bold;" class="force-string"><a href="../../main.php?route=payment_view&act&id=<?php echo $payment['no_invoice']; ?>&asal=<?php echo $rute; ?>" title="Detail"><?php echo $payment['no_payment']; ?></a></td>
+                <td><?php echo $payment['tanggal_payment']; ?></td>
+                <td>Payment</td>
+                <td align="right">-<?php echo number_format($payment['jumlah_payment']); ?></td>
+                <?php if ($payment['selisih_hari'] <= 30) { ?>
+                  <td align="right">-<?php echo number_format($payment['jumlah_payment']); ?></td>
+                  <td class="bg1" align="right">0</td>
+                  <td class="bg2" align="right">0</td>
+                  <td class="bg3" align="right">0</td>
+                <?php } else if ($payment['selisih_hari'] <= 60) { ?>
+                  <td align="right">0</td>
+                  <td class="bg1" align="right">-<?php echo number_format($payment['jumlah_payment']); ?></td>
+                  <td class="bg2" align="right">0</td>
+                  <td class="bg3" align="right">0</td>
+                <?php } else if ($payment['selisih_hari'] <= 90) { ?>
+                  <td align="right">0</td>
+                  <td class="bg1" align="right">0</td>
+                  <td class="bg2" align="right">-<?php echo number_format($payment['jumlah_payment']); ?></td>
+                  <td class="bg3" align="right">0</td>
+                <?php } else { ?>
+                  <td align="right">0</td>
+                  <td class="bg1" align="right">0</td>
+                  <td class="bg2" align="right">0</td>
+                  <td class="bg3" align="right">-<?php echo number_format($payment['jumlah_payment']); ?></td>
+                <?php } ?>
+              </tr>
+            <?php
+            }
+            ?>
+            <tr align="left" style="background-color: #e9ecef;">
+              <td style="font-weight: bold;" class="force-string"> Total Outstanding:
+                <span style="color: transparent; font-weight: normal;"><?php echo $supplier_name; ?></span>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td align="right"><?php echo number_format($totaloutstanding); ?></td>
+              <td align="right"><?php echo number_format($totalcurrent); ?></td>
+              <td class="bg1" align="right"><?php echo number_format($total31); ?></td>
+              <td class="bg2" align="right"><?php echo number_format($total61); ?></td>
+              <td class="bg3" align="right"><?php echo number_format($total91); ?></td>
+            </tr>
+          <?php
+          }
+          ?>
+        </tbody>
+      </table>
+    </div>
+  <?php } ?>
+
+
+  <!-- </div> -->
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+
+  <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+
+  <script>
+    function navigateOpname(button) {
+      var row = button.closest('tr');
+      const te1s = '<?php echo $en; ?>';
+      var tdValue = row.querySelector('td:nth-child(1)').textContent;
+      var tdValue2 = row.querySelector('td:nth-child(2)').getAttribute('data-value');
+      var tdValue3 = row.querySelector('td:nth-child(3)').textContent;
+
+      const jumlahopname = prompt("Masukan Stock Terbaru");
+      if (jumlahopname && jumlahopname.trim() !== '') {
+        let jumlah = jumlahopname.replace(/\D/g, '');
+        console.log(`tanggal :${tdValue}, Lokasi :${tdValue2}, Barang :${tdValue3}, jumlah :${jumlah}`);
+        $.ajax({
+          type: 'GET',
+          url: 'ajax_opname_stock.php?tanggal=' + tdValue + '&lokasi=' + tdValue2 + '&barang=' + tdValue3 + '&jumlah=' + jumlah,
+          dataType: 'json',
+          success: function(response) {
+            console.log('Success response received');
+            console.log('Response:', response);
+            if (response.error) {
+              console.log('Error:', response.error);
+            } else {
+              console.log('Success:', response.success);
+              console.log('Reloading the page');
+              location.reload(); // Page reload
+            }
+            // Log all parameters
+            // console.log('barang:', response.barang);
+            // console.log('lokasi:', response.lokasi);
+            // console.log('tanggal:', response.tanggal);
+            // console.log('jumlah:', response.jumlah);
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr.responseText);
+          }
+        });
+      }
+    }
+    // $(document).ready(function() {
+    //   $('#example_vendor_age').DataTable({
+    //     dom: 'Bfrtip',
+    //     scrollX: true,
+    //     buttons: [
+    //       'copy', 'csv', 'excel', 'pdf', 'print'
+    //     ]
+    //   });
+    // });
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      // Menghilangkan loading bar setelah halaman siap
+      $("#loading-bar").hide();
+
+      $('#example_vendor_age').DataTable({
+        "lengthChange": true,
+        paging: false,
+        ordering: false,
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'excel',
+            exportOptions: {
+              format: {
+                body: function(data, row, column, node) {
+                  // If the cell has 'hide-export' class, return an empty string
+                  if ($(node).hasClass('hide-export')) {
+                    return ''; // Hide this cell in export
+                  }
+                  if ($(node).hasClass('force-string')) {
+                    return '\u200C' + $(node).text().trim(); // 👈 extract only visible text
+                  }
+                  return data;
+                }
+              }
+            }
+          },
+          {
+            extend: 'copy',
+            exportOptions: {
+              format: {
+                body: function(data, row, column, node) {
+                  return $(node).hasClass('hide-export') ? '' : data;
+                }
+              }
+            }
+          },
+          {
+            extend: 'csv',
+            exportOptions: {
+              format: {
+                body: function(data, row, column, node) {
+                  return $(node).hasClass('hide-export') ? '' : data;
+                }
+              }
+            }
+          },
+          {
+            extend: 'pdf',
+            exportOptions: {
+              format: {
+                body: function(data, row, column, node) {
+                  return $(node).hasClass('hide-export') ? '' : data;
+                }
+              }
+            }
+          },
+          {
+            extend: 'print',
+            exportOptions: {
+              format: {
+                body: function(data, row, column, node) {
+                  return $(node).hasClass('hide-export') ? '' : data;
+                }
+              }
+            }
+          }
+        ]
+      });
+
+
+    });
+  </script>
+
+<?php include '../footer_lap_mutasi.php';
+} ?>

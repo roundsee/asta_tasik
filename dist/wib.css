@@ -1,0 +1,17 @@
+.close1, .mailbox-attachment-close1 {
+	float: right;
+	font-size: 1.2rem;
+	font-weight: 100;
+	line-height: 1;
+	color: #000;
+	text-shadow: 0 1px 0 #ffffff;
+	opacity: .5;
+}
+.table3 .th .td {
+	padding:0 10 0 10;
+}
+
+.table3 .thead-th {
+	background-color: darkgray;
+	color: black;
+}

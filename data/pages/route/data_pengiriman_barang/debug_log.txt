@@ -1,0 +1,24 @@
+Query: 
+                    INSERT INTO pengiriman_barang_detail_internal (kode_pengiriman, kd_cus_pengirim, tanggal_pengiriman, kd_barang, qty_dikirim, satuan, urut) 
+                    VALUES ('DEL-20241122-8001-0001', '8001', '20241122', '100002', '21', 'Pcs', '3')
+                
+Error: Cannot add or update a child row: a foreign key constraint fails (`db_asta_mart`.`pengiriman_barang_detail_internal`, CONSTRAINT `pengiriman_barang_detail_internal_ibfk_1` FOREIGN KEY (`kode_pengiriman`) REFERENCES `pengiriman_barang_internal` (`kode_pengiri)
+
+Query: 
+                    INSERT INTO pengiriman_barang_detail_internal (kode_pengiriman, kd_cus_pengirim, tanggal_pengiriman, kd_barang, qty_dikirim, satuan, urut) 
+                    VALUES ('DEL-20241122-8001-0001', '8001', '20241122', '100002', '21', 'Pcs', '3')
+                
+Error: Cannot add or update a child row: a foreign key constraint fails (`db_asta_mart`.`pengiriman_barang_detail_internal`, CONSTRAINT `pengiriman_barang_detail_internal_ibfk_1` FOREIGN KEY (`kode_pengiriman`) REFERENCES `pengiriman_barang_internal` (`kode_pengiri)
+
+Query: 
+                    INSERT INTO pengiriman_barang_detail_internal (kode_pengiriman, kd_cus_pengirim, tanggal_pengiriman, kd_barang, qty_dikirim, satuan, urut) 
+                    VALUES ('DEL-20241122-8001-0001', '8001', '20241122', '100002', '21', 'Pcs', '3')
+                
+Error: Cannot add or update a child row: a foreign key constraint fails (`db_asta_mart`.`pengiriman_barang_detail_internal`, CONSTRAINT `pengiriman_barang_detail_internal_ibfk_1` FOREIGN KEY (`kode_pengiriman`) REFERENCES `pengiriman_barang_internal` (`kode_pengiri)
+
+Query: 
+            INSERT INTO pengiriman_barang_internal (kode_pengiriman, kode_permintaan, kd_cus_pengirim) 
+            VALUES ('DEL-20241122-8001-0001', 'REQ-20241122-1316-0001', '8001')
+        
+Error: Duplicate entry 'DEL-20241122-8001-0001' for key 'pengiriman_barang_internal.PRIMARY'
+

@@ -1,0 +1,50 @@
+[04:37:05] [INFO]: cabang : 1316
+[04:37:05] [INFO]: employee : WG0474
+[04:38:46] [INFO]: cabang : 1316
+[04:38:46] [INFO]: employee : WG0474
+[04:40:39] [INFO]: cabang : 1316
+[04:40:39] [INFO]: employee : WG0474
+[04:40:53] [INFO]: Mutasi BD Tambah
+[04:40:53] [INFO]: Mutasi BD Tambah
+[04:47:52] [INFO]: cabang : 1316
+[04:47:52] [INFO]: employee : WG0474
+[04:47:53] [INFO]: Mutasi BS Tambah
+[04:47:53] [INFO]: Employee: WG0474
+[04:47:53] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan 
+          FROM user_login 
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus 
+          WHERE user_login.employee_number = 'WG0474'
+[04:47:54] [INFO]: Mutasi BS Tambah
+[04:47:54] [INFO]: Employee: WG0474
+[04:47:54] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan 
+          FROM user_login 
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus 
+          WHERE user_login.employee_number = 'WG0474'
+[04:55:32] [INFO]: cabang : 1316
+[04:55:32] [INFO]: employee : WG0474
+[04:55:34] [INFO]: Mutasi BS Tambah
+[04:55:34] [INFO]: Employee: WG0474
+[04:55:34] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan 
+          FROM user_login 
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus 
+          WHERE user_login.employee_number = 'WG0474'
+[04:55:34] [INFO]: Mutasi BS Tambah
+[04:55:34] [INFO]: Employee: WG0474
+[04:55:34] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan 
+          FROM user_login 
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus 
+          WHERE user_login.employee_number = 'WG0474'
+[05:23:23] [INFO]: cabang : 1316
+[05:23:23] [INFO]: employee : WG0474
+[05:23:26] [INFO]: Mutasi BS Tambah
+[05:23:26] [INFO]: Employee: WG0474
+[05:23:26] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan 
+          FROM user_login 
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus 
+          WHERE user_login.employee_number = 'WG0474'
+[05:23:26] [INFO]: Mutasi BS Tambah
+[05:23:26] [INFO]: Employee: WG0474
+[05:23:26] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan 
+          FROM user_login 
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus 
+          WHERE user_login.employee_number = 'WG0474'
