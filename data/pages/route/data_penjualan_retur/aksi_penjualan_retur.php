@@ -159,21 +159,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if (mysqli_num_rows($result_check) > 0) {
                     // Update jika data sudah ada
-                    $query_update = "UPDATE mutasi_stok SET 
+                    $query_update = "UPDATE mutasi_stok SET
                         qt_retur_jual = qt_retur_jual + $subtotal,
                         nilai_retur_jual = nilai_retur_jual + (harga_rata * $subtotal),
                         qt_tersedia = qt_tersedia + $subtotal,
                         nilai_tersedia = nilai_tersedia + (harga_rata * $subtotal) ,
-                        harga_rata = CASE 
+                        harga_rata = CASE
                                      WHEN qt_tersedia > 0 THEN nilai_tersedia / qt_tersedia
                                      ELSE $harga
-                                     END,                          
-                        hpp_jual = CASE 
+                                     END,
+                        hpp_jual = CASE
                                      WHEN qt_tersedia > 0 THEN (nilai_tersedia / qt_tersedia) * qt_jual
                                      ELSE $harga * qt_jual
                                      END,
                         qt_akhir = qt_akhir + $subtotal,
-                        nilai_akhir = CASE 
+                        nilai_akhir = CASE
                                      WHEN qt_tersedia > 0 THEN (nilai_tersedia / qt_tersedia) * qt_akhir
                                      ELSE $harga * qt_akhir
                                      END
@@ -187,14 +187,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     // Query untuk mendapatkan nilai awal, qty awal, nilai beli sebelumnya, dan qty beli sebelumnya dari tanggal terbaru
                     $query_awal = "SELECT
-                    tgl AS tgl_terakhir, 
+                    tgl AS tgl_terakhir,
                     nilai_akhir AS nilai_awalakhir,
                     qt_akhir AS qty_awalakhir,
-                    stok_opname, nilai_opname, harga_rata       
-                    FROM mutasi_stok 
-                    WHERE kd_cus = '$kd_cus' AND kd_brg = '$kd_brg' 
-                    ORDER BY 
-                    tgl_terakhir DESC 
+                    stok_opname, nilai_opname, harga_rata
+                    FROM mutasi_stok
+                    WHERE kd_cus = '$kd_cus' AND kd_brg = '$kd_brg'
+                    ORDER BY
+                    tgl_terakhir DESC
                     LIMIT 1";
 
                     $result_awal = mysqli_query($koneksi, $query_awal);
@@ -233,10 +233,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                     $nilai_retur_baru = $harga_rata_sebelumnya * $subtotal;
                     // Insert data baru
-                    $query_insert = "INSERT INTO mutasi_stok 
-                    (tgl, qty_awal,nilai_awal,qt_retur_jual, nilai_retur_jual, qt_tersedia, nilai_tersedia,  
+                    $query_insert = "INSERT INTO mutasi_stok
+                    (tgl, qty_awal,nilai_awal,qt_retur_jual, nilai_retur_jual, qt_tersedia, nilai_tersedia,
                     harga_rata , kd_cus, kd_brg, satuan,
-                    qt_akhir, nilai_akhir) VALUES (
+                    qt_akhir, nilai_akhir,refcode) VALUES (
                     '$tgl',
                     '$qty_awal',
                     '$nilai_awal',
@@ -249,7 +249,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     '$kd_brg',
                     'Pcs',
                     '$qt_tersedia',
-                    '$nilai_tersedia'
+                    '$nilai_tersedia','$kd_retur'
                 )";
                     $result_insert = mysqli_query($koneksi, $query_insert);
                     if (!$result_insert) {

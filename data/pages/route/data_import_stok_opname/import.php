@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
         $nilai_opname = isset($data['E']) ? mysqli_real_escape_string($koneksi, $data['E']) : '';
 
         if (empty($kd_brg)) {
-            continue; 
+            continue;
         }
 
         $nilai_opname = is_numeric($nilai_opname) ? $nilai_opname : 0;
@@ -48,11 +48,11 @@ if (isset($_POST['submit'])) {
 
         if (mysqli_num_rows($result_check) > 0) {
             // Update jika data sudah ada
-            $query_update = "UPDATE mutasi_stok SET 
+            $query_update = "UPDATE mutasi_stok SET
                     stok_opname = $qty_opname,
                     nilai_opname =  $nilai_opname
                    WHERE tgl = '$tgl' AND kd_cus = '$kd_cus' AND kd_brg = '$kd_brg'";
-     
+
 
             $resut_update = mysqli_query($koneksi, $query_update);
             if (!$resut_update) {
@@ -61,9 +61,9 @@ if (isset($_POST['submit'])) {
         } else {
 
             // Insert data baru
-            $query_insert = "INSERT INTO mutasi_stok 
+            $query_insert = "INSERT INTO mutasi_stok
                     (tgl, kd_cus, kd_brg, satuan,stok_opname,
-                    nilai_opname) VALUES (
+                    nilai_opname,refcode) VALUES (
                         '$tgl',
                         '$qty_awal',
                         '$nilai_awal',
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
                         '$nilai_jual',
                         '$harga_rata_sebelumnya' * '$qt_jual',
                         '$qty_awal' - '$qt_jual',
-                        '$harga_rata_sebelumnya' * ( '$qty_awal' - '$qt_jual' )
+                        '$harga_rata_sebelumnya' * ( '$qty_awal' - '$qt_jual','import stock opname' )
                     )";
 
             // echo "<pre>";

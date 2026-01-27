@@ -104,7 +104,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 	$kd_cus = $q1['kd_cus'];
 
 
-	//Hapus 
+	//Hapus
 	if ($route == $tujuan and $act == 'hapus') {
 
 		mysqli_query($koneksi, "DELETE from $tabel2 where $ff2 = '$_GET[id]'");
@@ -120,10 +120,10 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		echo "<script>history.go(-1)</script>";
 	}
 
-	//Tambah 
+	//Tambah
 	elseif ($route == $tujuan and $act == 'input') {
 		write_log("pengajuan: " . $_POST['no_pengajuan']);
-		
+
 		$tgl = date('ymd');
 		$no_pengajuan = 'MBS-' . $_POST['no_pengajuan'];
 		// echo $no_pengajuan;
@@ -173,13 +173,13 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		$pph = $q2['pph'];
 
 
-		$query = "INSERT INTO $tabel ($f1, $f2, $f3, $f4, $f5, $f6, $f9,$f16,$f17,$f18) 
+		$query = "INSERT INTO $tabel ($f1, $f2, $f3, $f4, $f5, $f6, $f9,$f16,$f17,$f18)
 		VALUES (
-			'$kode', 
-			'$_POST[$f2]', 
-			'$_POST[$f3]',  
-			'$_POST[$f4]',  
-			'$_POST[$f5]',  
+			'$kode',
+			'$_POST[$f2]',
+			'$_POST[$f3]',
+			'$_POST[$f4]',
+			'$_POST[$f5]',
 			'$_POST[$f6]',
 			'$_POST[$f9]',
 			'$kode_cabang',
@@ -189,12 +189,12 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		$result = mysqli_query($koneksi, $query);
 
 
-		$query2 = "INSERT INTO $tabel2 ($ff1, $ff2, $ff3, $ff4, $ff7, $ff8) 
+		$query2 = "INSERT INTO $tabel2 ($ff1, $ff2, $ff3, $ff4, $ff7, $ff8)
 		VALUES (
-			'$kode', 
-			'$kd_acc', 
-			'$_POST[$ff3]',  
-			'$_POST[$ff4]',  
+			'$kode',
+			'$kd_acc',
+			'$_POST[$ff3]',
+			'$_POST[$ff4]',
 			'$_POST[$ff7]',
 			'$urut'
 		)";
@@ -232,7 +232,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 			// Query SQL
 			$query = mysqli_query($koneksi, "SELECT kd_brg, nama,
-			CASE 
+			CASE
 				WHEN qty_satuan1 = '$qtySatuan' THEN Satuan1
 				WHEN qty_satuan2 = '$qtySatuan' THEN Satuan2
 				WHEN qty_satuan3 = '$qtySatuan' THEN Satuan3
@@ -240,7 +240,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 				WHEN qty_satuan5 = '$qtySatuan' THEN Satuan5
 				ELSE 'Tidak ada'
 			END AS satuan,
-			CASE 
+			CASE
 				WHEN qty_satuan1 = '$qtySatuan' THEN qty_satuan1
 				WHEN qty_satuan2 = '$qtySatuan' THEN qty_satuan2
 				WHEN qty_satuan3 = '$qtySatuan' THEN qty_satuan3
@@ -320,8 +320,8 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 		// Query untuk mendapatkan nomor urut terakhir berdasarkan format kode
 		$query = mysqli_query($koneksi, "
-			SELECT MAX(CAST(SUBSTRING_INDEX(kode_permintaan, '-', -1) AS UNSIGNED)) AS kodeTerbesar 
-			FROM permintaan_barang 
+			SELECT MAX(CAST(SUBSTRING_INDEX(kode_permintaan, '-', -1) AS UNSIGNED)) AS kodeTerbesar
+			FROM permintaan_barang
 			WHERE kode_permintaan LIKE 'REQ-$tanggal-$kd_cus_peminta-%'
 		");
 		$data = mysqli_fetch_array($query);
@@ -338,11 +338,10 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 
 
-		$query = "INSERT INTO $tabel ( $f1, $f2, $f4,$f3) 
+		$query = "INSERT INTO $tabel ( $f1, $f2, $f3)
 		VALUES (
-			'$kode_permintaan', 
-			'$_POST[$f2]', 
-			'$_POST[$f4]',
+			'$kode_permintaan',
+			'$_POST[$f2]',
 			'$_POST[$f3]'
 		)";
 
@@ -375,7 +374,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 				// Query SQL
 				$query = mysqli_query($koneksi, "SELECT kd_brg, nama,
-				CASE 
+				CASE
 					WHEN qty_satuan1 = '$qtySatuan' THEN Satuan1
 					WHEN qty_satuan2 = '$qtySatuan' THEN Satuan2
 					WHEN qty_satuan3 = '$qtySatuan' THEN Satuan3
@@ -383,7 +382,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 					WHEN qty_satuan5 = '$qtySatuan' THEN Satuan5
 					ELSE 'Tidak ada'
 				END AS satuan,
-				CASE 
+				CASE
 					WHEN qty_satuan1 = '$qtySatuan' THEN qty_satuan1
 					WHEN qty_satuan2 = '$qtySatuan' THEN qty_satuan2
 					WHEN qty_satuan3 = '$qtySatuan' THEN qty_satuan3
@@ -478,24 +477,24 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		$pph = $q2['pph'];
 
 
-		$query = "INSERT INTO $tabel ($f1, $f2, $f3, $f4, $f5, $f6, $f9) 
+		$query = "INSERT INTO $tabel ($f1, $f2, $f3, $f4, $f5, $f6, $f9)
 		VALUES (
-			'$kode', 
-			'$_POST[$f2]', 
-			'$_POST[$f3]',  
-			'$_POST[$f4]',  
-			'$_POST[$f5]',  
+			'$kode',
+			'$_POST[$f2]',
+			'$_POST[$f3]',
+			'$_POST[$f4]',
+			'$_POST[$f5]',
 			'$_POST[$f6]',
 			'$_POST[$f9]'
 		)";
 		$result = mysqli_query($koneksi, $query);
 
-		$query2 = "INSERT INTO $tabel2 ($ff1, $ff2, $ff3, $ff4, $ff7) 
+		$query2 = "INSERT INTO $tabel2 ($ff1, $ff2, $ff3, $ff4, $ff7)
 		VALUES (
-			'$kode', 
-			'$kd_acc', 
-			'$_POST[$ff3]',  
-			'$_POST[$ff4]',  
+			'$kode',
+			'$kd_acc',
+			'$_POST[$ff3]',
+			'$_POST[$ff4]',
 			'$_POST[$ff7]'
 		)";
 		$result2 = mysqli_query($koneksi, $query2);
@@ -511,7 +510,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 	} elseif ($route == $tujuan and $act == 'edit') {
 
 		// echo $ppn;
-		$query  = "UPDATE $tabel SET 
+		$query  = "UPDATE $tabel SET
 		$f3 = '$_POST[$f3]'
 		";
 		$query .= "WHERE $f1 = '$_POST[$f1]' ";
@@ -532,7 +531,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		$isi =  isset($_POST['isi_hidden']) && is_numeric($_POST['isi_hidden']) ? intval($_POST['isi_hidden']) : 0;
 		// Query SQL
 		$query = mysqli_query($koneksi, "SELECT kd_brg, nama,
-   CASE 
+   CASE
 	   WHEN qty_satuan1 = '$isi' THEN Satuan1
 	   WHEN qty_satuan2 = '$isi' THEN Satuan2
 	   WHEN qty_satuan3 = '$isi' THEN Satuan3
@@ -540,7 +539,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 	   WHEN qty_satuan5 = '$isi' THEN Satuan5
 	   ELSE 'Tidak ada'
    END AS satuan,
-   CASE 
+   CASE
 	   WHEN qty_satuan1 = '$isi' THEN qty_satuan1
 	   WHEN qty_satuan2 = '$isi' THEN qty_satuan2
 	   WHEN qty_satuan3 = '$isi' THEN qty_satuan3
@@ -558,7 +557,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		}
 
 		// Gunakan query dengan kondisi yang benar-benar integer atau NULL
-		$query  = "UPDATE $tabel2 SET 
+		$query  = "UPDATE $tabel2 SET
 			$ff10 = '$satuan',
 			$ff9 = '$isi',
 			$ff6 = '$qtyDiajukan'
@@ -576,7 +575,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		}
 	} elseif ($route == $tujuan and $act == 'submit') {
 
-		$query  = "UPDATE $tabel SET 
+		$query  = "UPDATE $tabel SET
 		submit = 2 ";
 		$query .= "WHERE $f1 = '$_GET[id]' ";
 		$result = mysqli_query($koneksi, $query);
@@ -589,7 +588,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		}
 	} elseif ($route == $tujuan and $act == 'cancel') {
 
-		$query  = "UPDATE $tabel SET 
+		$query  = "UPDATE $tabel SET
 		submit = 1 ";
 		$query .= "WHERE $f1 = '$_GET[id]' ";
 		$result = mysqli_query($koneksi, $query);
@@ -602,7 +601,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		}
 	} elseif ($route == $tujuan and $act == 'pengajuan_ulang') {
 
-		$query  = "UPDATE $tabel SET 
+		$query  = "UPDATE $tabel SET
 		submit = 0 ";
 		$query .= "WHERE $f1 = '$_GET[id]' ";
 		$result = mysqli_query($koneksi, $query);
@@ -614,7 +613,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 			echo "<script>history.go(-1)</script>";
 		}
 	}
-	//Input Gambar 
+	//Input Gambar
 	elseif ($route == 'pengajuan' and $act == 'gambar') {
 		// echo "<br/>id :".$_GET['id'];
 		$gambar_produk = $_FILES['photo']['name'];
@@ -625,7 +624,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		//cek dulu jika ada gambar produk jalankan coding ini
 		if ($gambar_produk != "") {
 			$rand = rand();
-			$ekstensi_diperbolehkan = array('png', 'jpg', 'bmp', 'jpeg'); //ekstensi file gambar yang bisa diupload 
+			$ekstensi_diperbolehkan = array('png', 'jpg', 'bmp', 'jpeg'); //ekstensi file gambar yang bisa diupload
 			$x = explode('.', $gambar_produk); //memisahkan nama file dengan ekstensi yang diupload
 			$ekstensi = strtolower(end($x));
 			$file_tmp = $_FILES['photo']['tmp_name'];
@@ -649,7 +648,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 			}
 		}
 	}
-	//Input File 
+	//Input File
 	elseif ($route == 'pengajuan' and $act == 'file') {
 		// echo "<br/>id :".$_GET['id'];
 		$gambar_produk = $_FILES['file']['name'];
@@ -660,7 +659,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		//cek dulu jika ada gambar produk jalankan coding ini
 		if ($gambar_produk != "") {
 			$rand = rand();
-			$ekstensi_diperbolehkan = array('png', 'jpg', 'bmp', 'jpeg'); //ekstensi file gambar yang bisa diupload 
+			$ekstensi_diperbolehkan = array('png', 'jpg', 'bmp', 'jpeg'); //ekstensi file gambar yang bisa diupload
 			$x = explode('.', $gambar_produk); //memisahkan nama file dengan ekstensi yang diupload
 			$ekstensi = strtolower(end($x));
 			$file_tmp = $_FILES['file']['tmp_name'];
@@ -685,7 +684,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		}
 	}
 
-	//nete Input 
+	//nete Input
 	elseif ($route == 'pengajuan' and $act == 'nego-input') {
 		// echo "<br/>id :".$_GET['id'];
 		// echo "<br/>idp :".$_GET['idp'];

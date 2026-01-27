@@ -1,5 +1,7 @@
 <?php
 include 'logging.php';
+
+write_log("mutasi bs view");
 $judulform = "Mutasi Barang BS";
 
 $data = 'data_mutasi_bs';
@@ -113,8 +115,8 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 			// Query untuk mendapatkan kd_cus dan nama_pelanggan berdasarkan tujuan kirim
 			$query = "
-			SELECT pelanggan.kd_cus, pelanggan.nama AS nama_pelanggan 
-			FROM pelanggan 
+			SELECT pelanggan.kd_cus, pelanggan.nama AS nama_pelanggan
+			FROM pelanggan
 			WHERE pelanggan.kd_cus IN ('" . $q1['kd_cus_pengirim'] . "', '" . $q1['kd_cus_peminta'] . "')
 			";
 			$result = mysqli_query($koneksi, $query);
@@ -283,7 +285,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 														from $tabel2 pd
 														LEFT JOIN employee ON employee.employee_number = pd.user_input
 													 	JOIN barang b ON b.kd_brg=pd.kd_barang
-														where pd.kode_permintaan='$_GET[id]' 
+														where pd.kode_permintaan='$_GET[id]'
 														ORDER BY pd.user_input DESC ");
 
 														if (!$sql1) {
@@ -343,7 +345,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 												<!-- tambah keterngan utk Proses .....-->
 												<?php
-												// if ($q1['submit'] <= 1) { 
+												// if ($q1['submit'] <= 1) {
 												?>
 												<form id="inputDetailForm" method="post" action="route/<?php echo $data; ?>/<?php echo $aksi; ?>.php?route=<?php echo $rute; ?>&act=input-detail&id=<?php echo $_GET['id']; ?>">
 													<div id="formControls">
@@ -374,9 +376,9 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 																		</div>
 																	</div>` : ''
 																	}
-													
+
 																		<input type="hidden" name="kd_po" class="form-control" value="<?php echo $kd_po; ?>" readonly />
-															
+
 
 																	<div class="col-lg-3">
 																		<div class="form-group">
@@ -385,7 +387,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 																				<option></option>
 																				<?php
 																				$kdSupp = $q1['kd_supp'];
-																				$produk = mysqli_query($koneksi, "SELECT * FROM barang b INNER JOIN supplier_barang sb ON b.kd_brg = sb.kd_brg 
+																				$produk = mysqli_query($koneksi, "SELECT * FROM barang b INNER JOIN supplier_barang sb ON b.kd_brg = sb.kd_brg
 																													WHERE sb.kd_supp = '$kdSupp'");
 																				while ($pro = mysqli_fetch_array($produk)) {
 																					echo "<option value='{$pro['kd_brg']}'
@@ -583,7 +585,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 
 												<!-- <a href="route/<?php echo $data; ?>/<?php echo $aksi; ?>.php?route=<?php echo $rute; ?>&act=proses-sph&id=<?php echo $_GET['id']; ?>"><button class="btn btn-success btn-xs pull-right  elevation-1" style="opacity: .7">Submit ...</button></a>
-													<div style="margin:10px"></div>												
+													<div style="margin:10px"></div>
 													<br><br> -->
 												<?php
 
@@ -638,7 +640,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		<?php
 			break;
 
-		//Form Edit detail 
+		//Form Edit detail
 		case "edit-detail":
 
 			// echo '<br>'.$_GET['id'];
@@ -648,7 +650,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 			$edit = mysqli_query($koneksi, "SELECT * from $tabel where $f1='$_GET[id]'");
 			$e = mysqli_fetch_array($edit);
 
-			$sql = mysqli_query($koneksi, "SELECT * from $tabel2 
+			$sql = mysqli_query($koneksi, "SELECT * from $tabel2
 						where $ff1='$_GET[id]' AND $ff2='$_GET[id2]'  ");
 			$s1 = mysqli_fetch_array($sql);
 
@@ -903,7 +905,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 		<?php
 			break;
-		//Form Tambah lagi 
+		//Form Tambah lagi
 		case "tambah-lagi":
 			$edit = mysqli_query($koneksi, "SELECT * from $tabel where $f2='$_GET[id]'");
 			$e = mysqli_fetch_array($edit);
@@ -1207,7 +1209,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		<?php
 			break;
 
-		//Form nego detail 
+		//Form nego detail
 		case "nego-detail":
 
 

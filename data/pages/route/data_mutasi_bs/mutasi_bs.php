@@ -102,7 +102,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 } else {
 
   switch ($_GET['act']) {
-    //Tampil Data 
+    //Tampil Data
     default:
 ?>
 
@@ -160,10 +160,10 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
                               <tbody>
                                 <?php
                                 $sql1 = mysqli_query($koneksi, "
-                                  SELECT 
+                                  SELECT
                                         m.id as id_mutasi_bs,
                                         lokasi.nama AS nama_lokasi
-                                  FROM mutasi_bs m 
+                                  FROM mutasi_bs m
                                   JOIN pelanggan AS lokasi ON lokasi.kd_cus = m.kd_cus
                                   WHERE m.kd_cus = '$kd_cus' and status <= 1
                               ");
@@ -964,3 +964,5 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
   }
 }
 ?>
+
+

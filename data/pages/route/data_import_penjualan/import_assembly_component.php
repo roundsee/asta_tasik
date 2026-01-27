@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 
         if (mysqli_num_rows($result_check) > 0) {
             // Update jika data sudah ada
-            $query_update = "UPDATE mutasi_stok SET 
+            $query_update = "UPDATE mutasi_stok SET
                     qt_pake = qt_pake + $qt_jual ,
                     nilai_pake = nilai_pake + $nilai_jual ,
                     qt_akhir = qt_akhir - $qt_jual,
@@ -66,14 +66,14 @@ if (isset($_POST['submit'])) {
 
             // Query untuk mendapatkan nilai awal, qty awal, nilai beli sebelumnya, dan qty beli sebelumnya dari tanggal terbaru
             $query_awal = "SELECT
-                tgl AS tgl_terakhir, 
+                tgl AS tgl_terakhir,
                 nilai_akhir AS nilai_awalakhir,
                 qt_akhir AS qty_awalakhir,
-                stok_opname, nilai_opname       
-                FROM mutasi_stok 
-                WHERE kd_cus = '$kd_cus' AND kd_brg = '$kd_brg' 
-                ORDER BY 
-                tgl_terakhir DESC 
+                stok_opname, nilai_opname
+                FROM mutasi_stok
+                WHERE kd_cus = '$kd_cus' AND kd_brg = '$kd_brg'
+                ORDER BY
+                tgl_terakhir DESC
                 LIMIT 1";
 
             $result_awal = mysqli_query($koneksi, $query_awal);
@@ -108,11 +108,11 @@ if (isset($_POST['submit'])) {
                 $harga_rata_sebelumnya = 0;
             }
             // Insert data baru
-            $query_insert = "INSERT INTO mutasi_stok 
-                    (tgl, qty_awal, nilai_awal, qt_tersedia, nilai_tersedia,  
+            $query_insert = "INSERT INTO mutasi_stok
+                    (tgl, qty_awal, nilai_awal, qt_tersedia, nilai_tersedia,
                     harga_rata , kd_cus, kd_brg, satuan,
                     qt_pake, nilai_pake,
-                    qt_akhir, nilai_akhir) VALUES (
+                    qt_akhir, nilai_akhir,refcode) VALUES (
                         '$tgl',
                         '$qty_awal',
                         '$nilai_awal',
@@ -125,7 +125,7 @@ if (isset($_POST['submit'])) {
                         '$qt_jual',
                         '$harga_rata_sebelumnya' * '$qt_jual',
                         '$qty_awal' - '$qt_jual',
-                        '$harga_rata_sebelumnya' * ( '$qty_awal' - '$qt_jual' )
+                        '$harga_rata_sebelumnya' * ( '$qty_awal' - '$qt_jual','import component penjualan' )
                     )";
 
             // echo "<pre>";

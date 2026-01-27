@@ -89,20 +89,20 @@ if (isset($_POST['submit'])) {
 
 
         // Query untuk mendapatkan data dari tanggal terbaru yang sesuai dengan unit dan barang sage
-        $query_awal = "SELECT 
-          tgl AS tgl_terakhir, 
-          nilai_akhir AS nilai_awal, 
-          qt_akhir AS qty_awal, 
-          nilai_beli AS nilai_beli_sebelumnya, 
-          qty_beli AS qty_beli_sebelumnya, 
+        $query_awal = "SELECT
+          tgl AS tgl_terakhir,
+          nilai_akhir AS nilai_awal,
+          qt_akhir AS qty_awal,
+          nilai_beli AS nilai_beli_sebelumnya,
+          qty_beli AS qty_beli_sebelumnya,
           harga_rata ,
-          stok_opname, nilai_opname 
-          FROM 
-          mutasi_stok  
-          WHERE  
-          kd_cus = '$kd_cus' AND kd_brg = '$kd_brg' 
-          ORDER BY 
-          tgl_terakhir DESC 
+          stok_opname, nilai_opname
+          FROM
+          mutasi_stok
+          WHERE
+          kd_cus = '$kd_cus' AND kd_brg = '$kd_brg'
+          ORDER BY
+          tgl_terakhir DESC
           LIMIT 1";
         $result_awal = mysqli_query($koneksi, $query_awal);
 
@@ -160,12 +160,12 @@ if (isset($_POST['submit'])) {
 
         if (mysqli_num_rows($result_check) > 0) {
             // Data sudah ada, update data yang ada dengan menjumlahkan banyak
-            $query_update = "UPDATE mutasi_stok SET 
+            $query_update = "UPDATE mutasi_stok SET
             qty_beli = qty_beli + $qty_beli,
             nilai_beli = nilai_beli + $nilai_beli,
             qt_tersedia = qt_tersedia + $qty_beli,
             nilai_tersedia = nilai_tersedia + $nilai_beli,
-            harga_rata = CASE 
+            harga_rata = CASE
                 WHEN (qty_awal + qty_beli) <= 0 OR (nilai_awal ) <=0 THEN (nilai_beli / qty_beli)
                 ELSE nilai_tersedia / qt_tersedia
             END,
@@ -184,10 +184,10 @@ if (isset($_POST['submit'])) {
             // Data belum ada, masukkan data baru
             $query_insert = "INSERT INTO mutasi_stok (tgl,kd_cus,kd_brg,satuan,
               qty_awal, nilai_awal, qty_beli, nilai_beli, qt_tersedia,nilai_tersedia,
-               qt_akhir,nilai_akhir, harga_rata) VALUES (
-                  '$tgl', 
-                  '$kd_cus', 
-                  '$kd_brg',  
+               qt_akhir,nilai_akhir, harga_rata,refcode) VALUES (
+                  '$tgl',
+                  '$kd_cus',
+                  '$kd_brg',
                   'Pcs',
                   '$qty_awal',
                   '$nilai_awal',
@@ -197,7 +197,7 @@ if (isset($_POST['submit'])) {
                   ('$qty_beli' + '$qty_awal') * '$harga_rata',
                   '$qty_beli' + '$qty_awal',
                   ('$qty_beli' + '$qty_awal') * '$harga_rata',
-                  '$harga_rata'
+                  '$harga_rata','import pembelian'
               )";
 
             // echo "<pre>";

@@ -1,4 +1,6 @@
 <?php
+include 'logging.php';
+write_log("mutasi bs detail");
 
 $judulform = "Permintaan Barang";
 
@@ -125,8 +127,8 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 			// Query untuk mendapatkan kd_cus dan nama_pelanggan berdasarkan tujuan kirim
 			$query = "
-			SELECT pelanggan.kd_cus, pelanggan.nama AS nama_pelanggan 
-			FROM pelanggan 
+			SELECT pelanggan.kd_cus, pelanggan.nama AS nama_pelanggan
+			FROM pelanggan
 			WHERE pelanggan.kd_cus IN ('" . $q1['kd_cus_pengirim'] . "', '" . $q1['kd_cus_peminta'] . "')
 			";
 			$result = mysqli_query($koneksi, $query);
@@ -361,7 +363,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 												<!-- tambah keterngan utk Proses .....-->
 												<?php
-												// if ($q1['submit'] <= 1) { 
+												// if ($q1['submit'] <= 1) {
 												?>
 												<form id="inputDetailForm" method="post" action="route/<?php echo $data; ?>/<?php echo $aksi; ?>.php?route=<?php echo $rute; ?>&act=input-detail&id=<?php echo $_GET['id']; ?>">
 													<div id="formControls">
@@ -394,10 +396,10 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 																		</div>
 																	</div>` : ''
 																	}
-													
+
 																		<input type="hidden" name="kode_permintaan" class="form-control" value="<?php echo $id; ?>" readonly />
 																		<input type="hidden" name="kd_cus_penerima" class="form-control" value="<?php echo $kd_cus_penerima; ?>" readonly />
-															
+
 
 																	<div class="col-lg-3 ">
 																		<div class="form-group">
@@ -490,7 +492,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 																		<button type="button" class="btn btn-danger btn-sm remove-form">Hapus</button>
 																	</div>
 																</div>
-																
+
 															`;
 
 
@@ -617,7 +619,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 															// Memeriksa jumlah baris yang tersisa
 															if ($('#newFormContainer .row').length === 0) {
 																console.log('No more rows, showing #save-detail');
-																// $('#save-form').hide(); 
+																// $('#save-form').hide();
 																$('#formFooter').hide(); // Menyembunyikan footer
 																$('#hr').hide(); // Menyembunyikan footer
 															}
@@ -774,7 +776,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 
 												<!-- <a href="route/<?php echo $data; ?>/<?php echo $aksi; ?>.php?route=<?php echo $rute; ?>&act=proses-sph&id=<?php echo $_GET['id']; ?>"><button class="btn btn-success btn-xs pull-right  elevation-1" style="opacity: .7">Submit ...</button></a>
-													<div style="margin:10px"></div>												
+													<div style="margin:10px"></div>
 													<br><br> -->
 												<?php
 
@@ -866,7 +868,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		<?php
 			break;
 
-		//Form Edit detail 
+		//Form Edit detail
 		case "edit-detail":
 
 			// echo '<br>'.$_GET['id'];
@@ -876,10 +878,10 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 			$edit = mysqli_query($koneksi, "SELECT * from $tabel where $f1='$_GET[id]'");
 			$e = mysqli_fetch_array($edit);
 
-			$sql = mysqli_query($koneksi, "SELECT * from $tabel2 
+			$sql = mysqli_query($koneksi, "SELECT * from $tabel2
 						where $ff2='$_GET[id]' AND $ff4='$_GET[id2]' AND $ff12 = '$_GET[id3]' ");
 			$s1 = mysqli_fetch_array($sql);
-			$sql2 = mysqli_query($koneksi, "SELECT * from barang 
+			$sql2 = mysqli_query($koneksi, "SELECT * from barang
 						where  kd_brg='$_GET[id2]'  ");
 			$s2 = mysqli_fetch_array($sql2)
 
@@ -1360,7 +1362,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 		<?php
 			break;
-		//Form Tambah lagi 
+		//Form Tambah lagi
 		case "tambah-lagi":
 			$edit = mysqli_query($koneksi, "SELECT * from $tabel where $f2='$_GET[id]'");
 			$e = mysqli_fetch_array($edit);
@@ -1664,7 +1666,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 		<?php
 			break;
 
-		//Form nego detail 
+		//Form nego detail
 		case "nego-detail":
 
 

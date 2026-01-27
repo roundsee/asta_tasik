@@ -1,7 +1,7 @@
 <?php
-  $host = "localhost"; 
+  $host = "localhost";
   $user = "root"; //user database //boganast_testwaroeng
-  $pass = ""; //password database // test123
+  $pass = "password"; //password database // test123
   $nama_db = "asta_juanda"; //nama database // boganast_testwaroeng
   $koneksi = mysqli_connect($host,$user,$pass,$nama_db); //pastikan urutan nya seperti ini, jangan tertukar
 

@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
         // Skip the header row if present
         if ($index == 1) continue;
 
-        
+
 
         $tgl = isset($data['A']) ? mysqli_real_escape_string($koneksi, $data['A']) : '';
         $kd_cus = isset($data['B']) ? mysqli_real_escape_string($koneksi, $data['B']) : '';
@@ -69,20 +69,20 @@ if (isset($_POST['submit'])) {
         }
 
         // Query untuk mendapatkan data dari tanggal terbaru yang sesuai dengan unit dan barang sage
-        $query_awal = "SELECT 
-        $f1 AS tgl_terakhir, 
-          nilai_akhir AS nilai_awal, 
-          qt_akhir AS qty_awal, 
-          nilai_beli AS nilai_beli_sebelumnya, 
-          qty_beli AS qty_beli_sebelumnya, 
+        $query_awal = "SELECT
+        $f1 AS tgl_terakhir,
+          nilai_akhir AS nilai_awal,
+          qt_akhir AS qty_awal,
+          nilai_beli AS nilai_beli_sebelumnya,
+          qty_beli AS qty_beli_sebelumnya,
           harga_rata ,
-          stok_opname, nilai_opname 
-          FROM 
-          $tabel  
-          WHERE  
-          $f2 = '$kd_cus' AND $f3 = '$kd_brg' 
-          ORDER BY 
-          tgl_terakhir DESC 
+          stok_opname, nilai_opname
+          FROM
+          $tabel
+          WHERE
+          $f2 = '$kd_cus' AND $f3 = '$kd_brg'
+          ORDER BY
+          tgl_terakhir DESC
           LIMIT 1";
         $result_awal = mysqli_query($koneksi, $query_awal);
 
@@ -115,7 +115,7 @@ if (isset($_POST['submit'])) {
         $nilai_beli_sebelumnya = is_numeric($nilai_beli_sebelumnya) ? $nilai_beli_sebelumnya : 0;
         $qty_beli_sebelumnya = is_numeric($qty_beli_sebelumnya) ? $qty_beli_sebelumnya : 0;
         $stok_opname = is_numeric($stok_opname) ? $stok_opname : 0;
-        $nilai_opname = is_numeric($nilai_opname) ? $nilai_opname : 0; 
+        $nilai_opname = is_numeric($nilai_opname) ? $nilai_opname : 0;
 
         // Hitung harga rata-rata
         if (($qty_awal - $qty_beli_retur) != 0) {
@@ -133,12 +133,12 @@ if (isset($_POST['submit'])) {
 
         if (mysqli_num_rows($result_check) > 0) {
             // Data sudah ada, update data yang ada dengan menjumlahkan banyak
-            $query_update = "UPDATE $tabel SET 
+            $query_update = "UPDATE $tabel SET
             $f9 = $f9 + '$qty_beli_retur',
             $f10 = $f10 + '$nilai_beli_retur',
             $f11 = $f11 - '$qty_beli_retur',
             $f17 = $f17 - '$qty_beli_retur',
-            $f13 = CASE 
+            $f13 = CASE
                 WHEN (qty_awal + qty_beli) <= 0 OR (nilai_awal ) <=0 THEN (nilai_beli / qty_beli)
                 ELSE (nilai_awal + nilai_beli - nilai_beli_retur) / (qty_awal + qty_beli - qty_beli_retur)
             END,
@@ -149,7 +149,7 @@ if (isset($_POST['submit'])) {
             // echo "<pre>";
             // echo $query_update;
             // echo "</pre>";
-            
+
             if (!$result_update) {
                 die("Query update gagal dijalankan: " . mysqli_errno($koneksi) . " - " . mysqli_error($koneksi));
             }
@@ -157,10 +157,10 @@ if (isset($_POST['submit'])) {
             // Data belum ada, masukkan data baru
             $query_insert = "INSERT INTO mutasi_stok (tgl,kd_cus,kd_brg,satuan,
               qty_awal, nilai_awal, qty_beli_retur, nilai_beli_retur, qt_tersedia,nilai_tersedia,
-               qt_akhir,nilai_akhir, harga_rata) VALUES (
-                  '$tgl', 
-                  '$kd_cus', 
-                  '$kd_brg',  
+               qt_akhir,nilai_akhir, harga_rata,refcode) VALUES (
+                  '$tgl',
+                  '$kd_cus',
+                  '$kd_brg',
                   'Pcs',
                   '$qty_awal',
                   '$nilai_awal',
@@ -170,13 +170,13 @@ if (isset($_POST['submit'])) {
                   ('$qty_awal' - '$qty_beli_retur') * '$harga_rata',
                   '$qty_awal' - '$qty_beli_retur',
                    ('$qty_awal' - '$qty_beli_retur') * '$harga_rata',
-                  '$harga_rata'
+                  '$harga_rata','import pembelian retur'
               )";
 
             // echo "<pre>";
             // echo $query_insert;
             // echo "</pre>";
-            
+
 
             $result_insert = mysqli_query($koneksi, $query_insert);
 

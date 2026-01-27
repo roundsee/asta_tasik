@@ -45,11 +45,11 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
         $no_build = 'BUILD-' . $lokasi . '-' . $tgl_build;
         $char = substr($no_build, 0, 17);
         $query = "
-            SELECT 
-                MAX(no_urut) AS max_nourut 
-            FROM 
-                assemblies 
-            WHERE 
+            SELECT
+                MAX(no_urut) AS max_nourut
+            FROM
+                assemblies
+            WHERE
                 SUBSTR(build, 1, 17) = '$char'
         ";
         $hasil = mysqli_query($koneksi, $query);
@@ -76,14 +76,14 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
             $quantity = $isi * $jml;
             $negative_quantity = -$quantity;
             if ($quantity > 0) {
-                $updatestock = mysqli_query($koneksi, "UPDATE inventory set 
+                $updatestock = mysqli_query($koneksi, "UPDATE inventory set
             stok = stok - '$quantity'
             WHERE kd_brg = '$kodekomponen' AND kd_cus = '$lokasi'");
                 if (mysqli_affected_rows($koneksi) == 0) {
                     $insertstock = mysqli_query($koneksi, "INSERT INTO inventory (kd_brg, kd_cus, stok,satuan) VALUES ('$kodekomponen', '$lokasi', '$negative_quantity','Pcs')");
                 }
             }
-            $assembly_components = mysqli_query($koneksi, "INSERT INTO `assembly_components`(`build_components`, `build`, `tanggal`, `kd_cus`, `kd_brg`,`nama_brg`, `banyak`, `harga`, `jumlah`, `satuan`, `qty_satuan`) 
+            $assembly_components = mysqli_query($koneksi, "INSERT INTO `assembly_components`(`build_components`, `build`, `tanggal`, `kd_cus`, `kd_brg`,`nama_brg`, `banyak`, `harga`, `jumlah`, `satuan`, `qty_satuan`)
             values('$nomorcomponen','$noBuild','$formattedDate','$lokasi','$kodekomponen','$namakomponen','$jml','$harga','$total','$satuan','$isi')");
             $qt_jual = $quantity;
             $nilai_jual =  $total;
@@ -92,7 +92,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
             if (mysqli_num_rows($result_check) > 0) {
                 // Update jika data sudah ada
-                $query_update = "UPDATE mutasi_stok SET 
+                $query_update = "UPDATE mutasi_stok SET
                     qt_pake = qt_pake + $qt_jual ,
                     nilai_pake = nilai_pake + $nilai_jual ,
                     qt_akhir = qt_akhir - $qt_jual,
@@ -108,14 +108,14 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
                 // Query untuk mendapatkan nilai awal, qty awal, nilai beli sebelumnya, dan qty beli sebelumnya dari tanggal terbaru
                 $query_awal = "SELECT
-                tgl AS tgl_terakhir, 
+                tgl AS tgl_terakhir,
                 nilai_akhir AS nilai_awalakhir,
                 qt_akhir AS qty_awalakhir,
-                stok_opname, nilai_opname       
-                FROM mutasi_stok 
-                WHERE kd_cus = '$lokasi' AND kd_brg = '$kodekomponen' 
-                ORDER BY 
-                tgl_terakhir DESC 
+                stok_opname, nilai_opname
+                FROM mutasi_stok
+                WHERE kd_cus = '$lokasi' AND kd_brg = '$kodekomponen'
+                ORDER BY
+                tgl_terakhir DESC
                 LIMIT 1";
 
                 $result_awal = mysqli_query($koneksi, $query_awal);
@@ -147,11 +147,11 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
                     $harga_rata_sebelumnya = $harga;
                 }
                 // Insert data baru
-                $query_insert = "INSERT INTO mutasi_stok 
-                (tgl, qty_awal, nilai_awal, qt_tersedia, nilai_tersedia,  
+                $query_insert = "INSERT INTO mutasi_stok
+                (tgl, qty_awal, nilai_awal, qt_tersedia, nilai_tersedia,
                 harga_rata , kd_cus, kd_brg, satuan,
                 qt_pake, nilai_pake,
-                qt_akhir, nilai_akhir) VALUES (
+                qt_akhir, nilai_akhir,refcode) VALUES (
                     '$tgl',
                     '$qty_awal',
                     '$nilai_awal',
@@ -164,7 +164,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
                     '$qt_jual',
                     '$harga_rata_sebelumnya' * '$qt_jual',
                     '$qty_awal' - '$qt_jual',
-                    '$harga_rata_sebelumnya' * ( '$qty_awal' - '$qt_jual' )
+                    '$harga_rata_sebelumnya' * ( '$qty_awal' - '$qt_jual','$noBuild' )
                 )";
                 $result_insert = mysqli_query($koneksi, $query_insert);
                 if (!$result_insert) {
@@ -186,14 +186,14 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
             $nomorresults = "RESULTS-" . $noBuild . "-" . sprintf("%04s", $urutanbarang);
             $quantity = $isi * $jml;
             if ($quantity > 0) {
-                $updatestock = mysqli_query($koneksi, "UPDATE inventory set 
+                $updatestock = mysqli_query($koneksi, "UPDATE inventory set
             stok = stok + '$quantity'
             WHERE kd_brg = '$kodebarangjadi' AND kd_cus = '$lokasi'");
                 if (mysqli_affected_rows($koneksi) == 0) {
                     $insertstock = mysqli_query($koneksi, "INSERT INTO inventory (kd_brg, kd_cus, stok,satuan) VALUES ('$kodebarangjadi', '$lokasi', '$quantity','Pcs')");
                 }
             }
-            $assembly_results = mysqli_query($koneksi, "INSERT INTO `assembly_results`(`build_results`, `build`, `tanggal`, `kd_cus`, `kd_brg`,`nama_brg`, `banyak`, `harga`, `jumlah`, `satuan`, `qty_satuan`, `harga_dasar`) 
+            $assembly_results = mysqli_query($koneksi, "INSERT INTO `assembly_results`(`build_results`, `build`, `tanggal`, `kd_cus`, `kd_brg`,`nama_brg`, `banyak`, `harga`, `jumlah`, `satuan`, `qty_satuan`, `harga_dasar`)
             values('$nomorresults','$noBuild','$formattedDate','$lokasi','$kodebarangjadi','$namabarangjadi','$jml','$harga','$total','$satuan','$isi','$hargaawal')");
             $qt_jual = $quantity;
             $nilai_jual =  $total;
@@ -202,21 +202,21 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
             if (mysqli_num_rows($result_check) > 0) {
                 // Update jika data sudah ada
-                $query_update = "UPDATE mutasi_stok SET 
+                $query_update = "UPDATE mutasi_stok SET
                     qt_produksi = qt_produksi + $qt_jual,
                     nilai_produksi = nilai_produksi + $nilai_jual,
                     qt_tersedia = qt_tersedia + $qt_jual,
                     nilai_tersedia = nilai_tersedia + $nilai_jual,
-                    harga_rata = CASE 
+                    harga_rata = CASE
                                  WHEN qt_tersedia > 0 THEN nilai_tersedia / qt_tersedia
                                  ELSE $harga
-                                 END,                          
-                    hpp_jual = CASE 
+                                 END,
+                    hpp_jual = CASE
                                  WHEN qt_tersedia > 0 THEN (nilai_tersedia / qt_tersedia) * qt_jual
                                  ELSE $harga * qt_jual
                                  END,
                     qt_akhir = qt_akhir + $qt_jual,
-                    nilai_akhir = CASE 
+                    nilai_akhir = CASE
                                  WHEN qt_tersedia > 0 THEN (nilai_tersedia / qt_tersedia) * qt_akhir
                                  ELSE $harga * qt_akhir
                                  END
@@ -230,14 +230,14 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
                 // Query untuk mendapatkan nilai awal, qty awal, nilai beli sebelumnya, dan qty beli sebelumnya dari tanggal terbaru
                 $query_awal = "SELECT
-                tgl AS tgl_terakhir, 
+                tgl AS tgl_terakhir,
                 nilai_akhir AS nilai_awalakhir,
                 qt_akhir AS qty_awalakhir,
-                stok_opname, nilai_opname       
-                FROM mutasi_stok 
-                WHERE kd_cus = '$lokasi' AND kd_brg = '$kodebarangjadi' 
-                ORDER BY 
-                tgl_terakhir DESC 
+                stok_opname, nilai_opname
+                FROM mutasi_stok
+                WHERE kd_cus = '$lokasi' AND kd_brg = '$kodebarangjadi'
+                ORDER BY
+                tgl_terakhir DESC
                 LIMIT 1";
 
                 $result_awal = mysqli_query($koneksi, $query_awal);
@@ -273,10 +273,10 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
                     $harga_rata_sebelumnya = $harga;
                 }
                 // Insert data baru
-                $query_insert = "INSERT INTO mutasi_stok 
-                (tgl, qty_awal,nilai_awal,qt_produksi, nilai_produksi, qt_tersedia, nilai_tersedia,  
+                $query_insert = "INSERT INTO mutasi_stok
+                (tgl, qty_awal,nilai_awal,qt_produksi, nilai_produksi, qt_tersedia, nilai_tersedia,
                 harga_rata , kd_cus, kd_brg, satuan,
-                qt_akhir, nilai_akhir) VALUES (
+                qt_akhir, nilai_akhir,refcode) VALUES (
                 '$tgl',
                 '$qty_awal',
                 '$nilai_awal',
@@ -289,7 +289,8 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
                 '$kodebarangjadi',
                 'Pcs',
                 '$qt_tersedia',
-                '$nilai_tersedia'
+                '$nilai_tersedia',
+                '$noBuild'
             )";
                 $result_insert = mysqli_query($koneksi, $query_insert);
                 if (!$result_insert) {
@@ -304,7 +305,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
             hrg_satuan1_online,hrg_satuan2_online,hrg_satuan3_online,hrg_satuan4_online,hrg_satuan5_online,
             hrg_satuan1_ms,hrg_satuan2_ms,hrg_satuan3_ms,hrg_satuan4_ms,hrg_satuan5_ms,
             hrg_satuan1_mg,hrg_satuan2_mg,hrg_satuan3_mg,hrg_satuan4_mg,hrg_satuan5_mg,
-            hrg_satuan1_mp,hrg_satuan2_mp,hrg_satuan3_mp,hrg_satuan4_mp,hrg_satuan5_mp,qty_satuan1,qty_satuan2,qty_satuan3,qty_satuan4,qty_satuan5 
+            hrg_satuan1_mp,hrg_satuan2_mp,hrg_satuan3_mp,hrg_satuan4_mp,hrg_satuan5_mp,qty_satuan1,qty_satuan2,qty_satuan3,qty_satuan4,qty_satuan5
             FROM barang WHERE kd_brg='$kodebarangjadi'";
             $check_barang_result = mysqli_query($koneksi, $check_barang_sql);
             $check_barang_data = mysqli_fetch_assoc($check_barang_result);
@@ -357,23 +358,23 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
                             $prefixes = '';
                             break;
                     }
-                    $querysql1 = mysqli_query($koneksi, "SELECT 
+                    $querysql1 = mysqli_query($koneksi, "SELECT
                         IFNULL(layer1, 0) AS layer11,
-                        IFNULL(SUBSTRING_INDEX(layer2, '|', 1), 0) AS layer21, 
+                        IFNULL(SUBSTRING_INDEX(layer2, '|', 1), 0) AS layer21,
                         IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer2, '|', 2), '|', -1), 0) AS layer22,
-                        IFNULL(SUBSTRING_INDEX(layer3, '|', 1), 0) AS layer31,  
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer3, '|', 2), '|', -1), 0) AS layer32,  
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer3, '|', 3), '|', -1), 0) AS layer33, 
-                        IFNULL(SUBSTRING_INDEX(layer4, '|', 1), 0) AS layer41, 
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 2), '|', -1), 0) AS layer42, 
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 3), '|', -1), 0) AS layer43, 
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 4), '|', -1), 0) AS layer44,  
-                        IFNULL(SUBSTRING_INDEX(layer5, '|', 1), 0) AS layer51,  
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 2), '|', -1), 0) AS layer52, 
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 3), '|', -1), 0) AS layer53,  
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 4), '|', -1), 0) AS layer54,  
+                        IFNULL(SUBSTRING_INDEX(layer3, '|', 1), 0) AS layer31,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer3, '|', 2), '|', -1), 0) AS layer32,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer3, '|', 3), '|', -1), 0) AS layer33,
+                        IFNULL(SUBSTRING_INDEX(layer4, '|', 1), 0) AS layer41,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 2), '|', -1), 0) AS layer42,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 3), '|', -1), 0) AS layer43,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 4), '|', -1), 0) AS layer44,
+                        IFNULL(SUBSTRING_INDEX(layer5, '|', 1), 0) AS layer51,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 2), '|', -1), 0) AS layer52,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 3), '|', -1), 0) AS layer53,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 4), '|', -1), 0) AS layer54,
                         IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 5), '|', -1), 0) AS layer55
-                    FROM kategori_nilai 
+                    FROM kategori_nilai
                     WHERE Nama_kategoriNilai = '$Nama_kategoriNilaiidkat' AND id_kat = $id_kat");
 
                     if ($s1 = mysqli_fetch_array($querysql1)) {

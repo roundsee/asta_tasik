@@ -10,9 +10,9 @@ foreach ($kd_brg as $index => $kode_barang) {
         $qty_terima_value = isset($qty_terima[$index]) ? $qty_terima[$index] : 0;
         // Ambil data terakhir dari mutasi_stok
         $query_get_last_data = "SELECT qty_akhir, harga_akhir, nilai_akhir, qty_beli_retur, harga_beli_retur, nilai_beli_retur, stok_opname, nilai_opname
-                        FROM mutasi_stok 
-                        WHERE kd_brg = '$kode_barang' 
-                        ORDER BY tgl DESC 
+                        FROM mutasi_stok
+                        WHERE kd_brg = '$kode_barang'
+                        ORDER BY tgl DESC
                         LIMIT 1";
 
         $result_last_data = mysqli_query($koneksi, $query_get_last_data);
@@ -55,9 +55,9 @@ foreach ($kd_brg as $index => $kode_barang) {
         }
 
         // Query untuk mengambil price dan disc dari pembelian_detail berdasarkan kd_brg dan tanggal terbaru
-        $query_get_pembelian_detail = "SELECT price, disc, kd_po 
-                                       FROM pembelian_detail 
-                                       WHERE kd_po = '$kd_po' 
+        $query_get_pembelian_detail = "SELECT price, disc, kd_po
+                                       FROM pembelian_detail
+                                       WHERE kd_po = '$kd_po'
                                       ";
 
         $result_pembelian_detail = mysqli_query($koneksi, $query_get_pembelian_detail);
@@ -75,8 +75,8 @@ foreach ($kd_brg as $index => $kode_barang) {
             echo "kd_po: " . $kd_po . "<br>";
 
             // Query untuk mengambil tarif_ppn dari pembelian berdasarkan kd_po
-            $query_get_pembelian = "SELECT tarif_ppn 
-                                    FROM pembelian 
+            $query_get_pembelian = "SELECT tarif_ppn
+                                    FROM pembelian
                                     WHERE kd_po = '$kd_po'";
 
             $result_pembelian = mysqli_query($koneksi, $query_get_pembelian);
@@ -106,8 +106,8 @@ foreach ($kd_brg as $index => $kode_barang) {
         $harga_akhir = $nilai_akhir / $qty_akhir;
 
         // Masukkan data ke dalam mutasi_stok
-        $query_insert_penerimaan_barang = "INSERT INTO mutasi_stok (tgl, kd_brg, satuan, qty_awal, harga_awal, nilai_awal, qty_beli, harga_beli, nilai_beli, harga_rata, qty_akhir, harga_akhir, nilai_akhir) 
-                                           VALUES ('$tanggal_sekarang', '$kode_barang', 'Pcs', '$qty_awal', '$harga_awal', '$nilai_awal', '$qty_terima_value', '$price', '$nilai_beli', '$harga_rata', '$qty_akhir', '$harga_akhir', '$nilai_akhir')";
+        $query_insert_penerimaan_barang = "INSERT INTO mutasi_stok (tgl, kd_brg, satuan, qty_awal, harga_awal, nilai_awal, qty_beli, harga_beli, nilai_beli, harga_rata, qty_akhir, harga_akhir, nilai_akhir,refcode)
+                                           VALUES ('$tanggal_sekarang', '$kode_barang', 'Pcs', '$qty_awal', '$harga_awal', '$nilai_awal', '$qty_terima_value', '$price', '$nilai_beli', '$harga_rata', '$qty_akhir', '$harga_akhir', '$nilai_akhir'.'$kd_po')";
 
         var_dump($query_insert_penerimaan_barang);
         // Eksekusi query insert

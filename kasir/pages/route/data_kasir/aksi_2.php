@@ -59,7 +59,7 @@ $kategoripenguranganstok = $q1['kategori_kasir'];
 
 $no_inv 				= $_POST['no_inv'];
 $kd_cus 				= $_POST['kd_cus'];
-// $kd_aplikasi 		= $_SESSION['kd_aplikasi']; 
+// $kd_aplikasi 		= $_SESSION['kd_aplikasi'];
 $kd_aplikasi 		= $_COOKIE['kode_app'];
 // echo $kd_aplikasi;
 $no_meja 				= $_POST['no_meja'];
@@ -397,7 +397,7 @@ for ($a = 0; $a < $jumlah_pembelian; $a++) {
 	if ($quantity > 0) {
 		if ($kodeAppValue != 1) {
 			$kd_cus_tambahan = 8001;
-			$updatestock = mysqli_query($koneksi, "UPDATE inventory set 
+			$updatestock = mysqli_query($koneksi, "UPDATE inventory set
 			stok = stok - '$quantity'
 			WHERE kd_brg = '$t_produk' AND kd_cus = 8001");
 			if (mysqli_affected_rows($koneksi) == 0) {
@@ -405,7 +405,7 @@ for ($a = 0; $a < $jumlah_pembelian; $a++) {
 			}
 		} else {
 			$kd_cus_tambahan = 1316;
-			$updatestock = mysqli_query($koneksi, "UPDATE inventory set 
+			$updatestock = mysqli_query($koneksi, "UPDATE inventory set
 			stok = stok - '$quantity'
 			WHERE kd_brg = '$t_produk' AND kd_cus = 1316");
 			if (mysqli_affected_rows($koneksi) == 0) {
@@ -421,7 +421,7 @@ for ($a = 0; $a < $jumlah_pembelian; $a++) {
 	$result_check = mysqli_query($koneksi, $query_check);
 
 	if (mysqli_num_rows($result_check) > 0) {
-		$query_update = "UPDATE mutasi_stok SET 
+		$query_update = "UPDATE mutasi_stok SET
 				qt_jual = qt_jual + $qt_jual ,
                 nilai_jual = nilai_jual + $nilai_jual,
                 hpp_jual = qt_jual * harga_rata,
@@ -434,14 +434,14 @@ for ($a = 0; $a < $jumlah_pembelian; $a++) {
 		}
 	} else {
 		$query_awal = "SELECT
-			tgl AS tgl_terakhir, 
+			tgl AS tgl_terakhir,
 			nilai_akhir AS nilai_awalakhir,
 			qt_akhir AS qty_awalakhir,
-			stok_opname, nilai_opname    
-			FROM mutasi_stok 
-			WHERE kd_cus = '$kd_cus_tambahan' AND kd_brg = '$t_produk' 
-			ORDER BY 
-			tgl_terakhir DESC 
+			stok_opname, nilai_opname
+			FROM mutasi_stok
+			WHERE kd_cus = '$kd_cus_tambahan' AND kd_brg = '$t_produk'
+			ORDER BY
+			tgl_terakhir DESC
 			LIMIT 1";
 
 		$result_awal = mysqli_query($koneksi, $query_awal);
@@ -472,11 +472,12 @@ for ($a = 0; $a < $jumlah_pembelian; $a++) {
 		} else {
 			$harga_rata_sebelumnya = $t_harga / $t_satuan_qty;
 		}
-		$query_insert = "INSERT INTO mutasi_stok 
-				(tgl, qty_awal, nilai_awal, qt_tersedia, nilai_tersedia,  
+		$query_insert = "INSERT INTO mutasi_stok
+				(refcode,tgl, qty_awal, nilai_awal, qt_tersedia, nilai_tersedia,
 				harga_rata , kd_cus, kd_brg, satuan,
 				qt_jual, nilai_jual,hpp_jual,
 				qt_akhir, nilai_akhir) VALUES (
+					'$jadi',
 					'$tgl',
 					'$qty_awal',
 					'$nilai_awal',
@@ -557,8 +558,8 @@ if (isset($_POST['voucher_produk'])) {
 		$v_produk = $voucher_produk[$b];
 		$v_nilai = $voucher_nilai[$b];
 
-		$pocer = mysqli_query($koneksi, "UPDATE retur_penjualan 
-		SET status_voucher = 2, faktur_voucher = '$noInvoice' 
+		$pocer = mysqli_query($koneksi, "UPDATE retur_penjualan
+		SET status_voucher = 2, faktur_voucher = '$noInvoice'
 		WHERE no_voucher = '$v_produk'");
 
 		if ($pocer) {

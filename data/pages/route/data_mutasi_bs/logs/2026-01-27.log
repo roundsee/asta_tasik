@@ -1,0 +1,58 @@
+[05:57:33] [INFO]: cabang : 1316
+[05:57:33] [INFO]: employee : WG0474
+[06:03:00] [INFO]: cabang : 1316
+[06:03:00] [INFO]: employee : WG0474
+[06:16:23] [INFO]: cabang : 1316
+[06:16:23] [INFO]: employee : WG0474
+[06:16:33] [INFO]: cabang : 1316
+[06:16:33] [INFO]: employee : WG0474
+[06:24:05] [INFO]: cabang : 1316
+[06:24:05] [INFO]: employee : WG0474
+[06:24:10] [INFO]: Mutasi BS Tambah
+[06:24:10] [INFO]: Employee: WG0474
+[06:24:10] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan 
+          FROM user_login 
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus 
+          WHERE user_login.employee_number = 'WG0474'
+[06:24:12] [INFO]: Mutasi BS Tambah
+[06:24:12] [INFO]: Employee: WG0474
+[06:24:12] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan 
+          FROM user_login 
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus 
+          WHERE user_login.employee_number = 'WG0474'
+[06:24:36] [INFO]: Route: mutasi_bs
+[06:24:36] [INFO]: act: input-baru
+[06:32:30] [INFO]: mutasi bs tambah
+[06:32:30] [INFO]: Mutasi BS Tambah
+[06:32:30] [INFO]: Employee: WG0474
+[06:32:30] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[06:32:53] [INFO]: Route: mutasi_bs
+[06:32:53] [INFO]: act: input-baru
+[06:34:27] [INFO]: mutasi bs tambah
+[06:34:27] [INFO]: Mutasi BS Tambah
+[06:34:27] [INFO]: Employee: WG0474
+[06:34:27] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[06:35:34] [INFO]: Route: mutasi_bs
+[06:35:34] [INFO]: act: input-baru
+[06:41:47] [INFO]: mutasi bs tambah
+[06:41:47] [INFO]: Mutasi BS Tambah
+[06:41:47] [INFO]: Employee: WG0474
+[06:41:47] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[06:42:17] [INFO]: Route: mutasi_bs
+[06:42:17] [INFO]: act: input-baru
+[06:45:21] [INFO]: mutasi bs tambah
+[06:45:21] [INFO]: Mutasi BS Tambah
+[06:45:21] [INFO]: Employee: WG0474
+[06:45:21] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'

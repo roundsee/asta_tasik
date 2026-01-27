@@ -6,7 +6,7 @@ session_start();
 include $dir . 'config/koneksi.php';
 include $dir . 'config/library.php';
 
-
+write_log("mutasi bs tambah");
 
 $judulform = "Mutasi Barang BS";
 
@@ -84,11 +84,11 @@ $employee = $_SESSION['employee_number'];
 write_log("Mutasi BS Tambah");
 write_log("Employee: ". $employee);
 // Query untuk mendapatkan kd_cus berdasarkan employee_number
-$query = "SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan 
-          FROM user_login 
-          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus 
+$query = "SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
           WHERE user_login.employee_number = '$employee'";
-write_log($query);          
+write_log($query);
 $result = mysqli_query($koneksi, $query);
 
 // Tambahkan pengecekan error pada query
@@ -123,15 +123,19 @@ include '../header.php';
           <div class="col-lg-3">
             <div class="form-group">
               <label>Tanggal Mutasi BS</label>
-              <input type="date" class="form-control" name="<?php echo $f4; ?>" placeholder="Masukan <?php echo $j2; ?> (Wajib)" value="<?php echo date('Y-m-d') ?>" readonly>
+              <input type="date" class="form-control" name="tanggal"  value="<?php echo date('Y-m-d') ?>" readonly>
             </div>
           </div>
 
           <div class="col-lg-4">
             <label>Lokasi</label>
             <input type="text" class="form-control" value="<?php echo $kd_cus . "-" . $nama_cus ?>" readonly>
-            <input type="hidden" class="form-control" name="<?php echo $f2 ?>" value="<?php echo $kd_cus ?>" readonly>
           </div>
+          <div class="col-lg-4">
+            <label>Keterangan</label>
+            <input type="text" class="form-control">
+          </div>
+
 
         </div>
       </div>

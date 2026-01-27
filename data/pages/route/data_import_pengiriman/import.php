@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
         // echo "Kode Customer Penerima: $kd_cus_penerima\n";
         // echo "Kode Barang: $kode_barang\n";
         // echo "Quantity: $qty\n";
-        
+
 
         if (empty($kode_barang)) {
             continue; // Skip if kd_sage is empty
@@ -99,19 +99,19 @@ if (isset($_POST['submit'])) {
 
 
         // Query untuk mendapatkan data dari tanggal terbaru yang sesuai dengan unit pengirim dan barang sage
-        $query_awal = "SELECT 
-         tgl AS tgl_terakhir, 
-         nilai_akhir AS nilai_awal, 
-         qt_akhir AS qty_awal, 
-         nilai_beli AS nilai_beli_sebelumnya, 
+        $query_awal = "SELECT
+         tgl AS tgl_terakhir,
+         nilai_akhir AS nilai_awal,
+         qt_akhir AS qty_awal,
+         nilai_beli AS nilai_beli_sebelumnya,
          qty_beli AS qty_beli_sebelumnya,
-         stok_opname, nilai_opname 
-         FROM 
-         mutasi_stok  
-         WHERE  
-         kd_cus = '$kd_cus_pengirim' AND kd_brg = '$kode_barang' 
-         ORDER BY 
-         tgl_terakhir DESC 
+         stok_opname, nilai_opname
+         FROM
+         mutasi_stok
+         WHERE
+         kd_cus = '$kd_cus_pengirim' AND kd_brg = '$kode_barang'
+         ORDER BY
+         tgl_terakhir DESC
          LIMIT 1";
 
         $result_awal = mysqli_query($koneksi, $query_awal);
@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
             $nilai_awal = $row_awal['nilai_awal'];
             $nilai_beli_sebelumnya = $row_awal['nilai_beli_sebelumnya'];
             $qty_beli_sebelumnya = $row_awal['qty_beli_sebelumnya'];
-          
+
 
             $stok_opname = $row_awal['stok_opname'];
             $nilai_opname = $row_awal['nilai_opname'];
@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
             $nilai_beli_sebelumnya = 0;
             $qty_beli_sebelumnya = 0;
             $stok_opname = 0; // Default jika tidak ada data
-            $nilai_opname = 0; // Default jika tidak ada data    
+            $nilai_opname = 0; // Default jika tidak ada data
         }
 
         // Tentukan nilai qty_awal
@@ -145,7 +145,7 @@ if (isset($_POST['submit'])) {
 
         // Validasi untuk memastikan nilai numerik
         $nilai_awal = is_numeric($nilai_awal) ? $nilai_awal : 0;
-    
+
 
 
         // Cek apakah data dengan kombinasi yang sama sudah ada untuk pengirim sudah ada di hari yang sama
@@ -174,7 +174,7 @@ if (isset($_POST['submit'])) {
 
         if (mysqli_num_rows($result_check_pengirim) > 0) {
             // Update data yang ada dengan menjumlahkan qt_kirim_int untuk pengirim
-            $query_update_pengirim = "UPDATE mutasi_stok SET 
+            $query_update_pengirim = "UPDATE mutasi_stok SET
             qt_kirim_int = qt_kirim_int + $qty,
             nilai_kirim_int = nilai_kirim_int + ('$harga_rata_pengirim' * $qty),
             qt_akhir = qt_akhir - $qty ,
@@ -188,18 +188,18 @@ if (isset($_POST['submit'])) {
                 die("Query update gagal dijalankan: " . mysqli_errno($koneksi) . " - " . mysqli_error($koneksi));
             }
         } else {
-            $query_insert_pengirim = "INSERT INTO 
+            $query_insert_pengirim = "INSERT INTO
             mutasi_stok (tgl, qty_awal, nilai_awal,qt_tersedia,
             nilai_tersedia,harga_rata, kd_cus, kd_brg, satuan,
              qt_kirim_int,nilai_kirim_int, qt_akhir, nilai_akhir) VALUES (
-            '$tanggal', 
+            '$tanggal',
             '$qty_awal',
             '$nilai_awal',
             '$qty_awal',
             '$nilai_awal',
             '$harga_rata',
-            '$kd_cus_pengirim', 
-            '$kode_barang',  
+            '$kd_cus_pengirim',
+            '$kode_barang',
             'Pcs',
             '$qty',
             '$qty' * $harga_rata,
@@ -220,20 +220,20 @@ if (isset($_POST['submit'])) {
 
         // UNTUK PENERIMANYA
 
-         // Query untuk mendapatkan data dari tanggal terbaru yang sesuai dengan unit penerima 
-         $query_awal = "SELECT 
-         tgl AS tgl_terakhir, 
-         nilai_akhir AS nilai_awal, 
-         qt_akhir AS qty_awal, 
-         nilai_beli AS nilai_beli_sebelumnya, 
+         // Query untuk mendapatkan data dari tanggal terbaru yang sesuai dengan unit penerima
+         $query_awal = "SELECT
+         tgl AS tgl_terakhir,
+         nilai_akhir AS nilai_awal,
+         qt_akhir AS qty_awal,
+         nilai_beli AS nilai_beli_sebelumnya,
          qty_beli AS qty_beli_sebelumnya,
-         stok_opname, nilai_opname 
-         FROM 
-         mutasi_stok  
-         WHERE  
-         kd_cus = '$kd_cus_penerima' AND kd_brg = '$kode_barang' 
-         ORDER BY 
-         tgl_terakhir DESC 
+         stok_opname, nilai_opname
+         FROM
+         mutasi_stok
+         WHERE
+         kd_cus = '$kd_cus_penerima' AND kd_brg = '$kode_barang'
+         ORDER BY
+         tgl_terakhir DESC
          LIMIT 1";
 
 
@@ -257,7 +257,7 @@ if (isset($_POST['submit'])) {
             $nilai_beli_sebelumnya = 0;
             $qty_beli_sebelumnya = 0;
             $stok_opname = 0; // Default jika tidak ada data
-            $nilai_opname = 0; // Default jika tidak ada data    
+            $nilai_opname = 0; // Default jika tidak ada data
         }
 
         // Tentukan nilai qty_awal
@@ -281,7 +281,7 @@ if (isset($_POST['submit'])) {
             $harga_rata_penerima_tanggal_sama = 0;
         }
 
-       
+
         if (($nilai_awal <= 0 || $qty_awal <= 0)) {
             $harga_rata_penerima = $harga_rata_pengirim;
         } else {
@@ -296,8 +296,8 @@ if (isset($_POST['submit'])) {
         }
 
         if (mysqli_num_rows($result_check_penerima) > 0) {
-            $query_update_penerima = "UPDATE mutasi_stok SET 
-             qt_terima_int = qt_terima_int + $qty , 
+            $query_update_penerima = "UPDATE mutasi_stok SET
+             qt_terima_int = qt_terima_int + $qty ,
              nilai_terima_int = nilai_terima_int +  ('$harga_rata_pengirim' * $qty ),
              qt_tersedia = qt_tersedia + $qty ,
              nilai_tersedia = nilai_tersedia + ('$harga_rata_pengirim' * $qty ),
@@ -318,12 +318,12 @@ if (isset($_POST['submit'])) {
             // Insert data baru untuk penerima
             $query_insert_penerima = "INSERT INTO mutasi_stok
               (tgl, qty_awal, nilai_awal, kd_cus, kd_brg, satuan,
-               nilai_terima_int, qt_terima_int, qt_tersedia, nilai_tersedia, qt_akhir, nilai_akhir, harga_rata) VALUES (
-             '$tanggal', 
+               nilai_terima_int, qt_terima_int, qt_tersedia, nilai_tersedia, qt_akhir, nilai_akhir, harga_rata,refcode) VALUES (
+             '$tanggal',
              '$qty_awal',
              '$nilai_awal',
              '$kd_cus_penerima',
-             '$kode_barang',  
+             '$kode_barang',
              'Pcs',
              '$harga_rata' * $qty ,
               $qty ,
@@ -331,7 +331,7 @@ if (isset($_POST['submit'])) {
              '$nilai_awal'+ ('$harga_rata' * $qty ),
              '$qty_awal' +  $qty ,
              ('$qty_awal' +  $qty) * '$harga_rata_penerima',
-            '$harga_rata_penerima'
+            '$harga_rata_penerima','import pengiriman'
 
           )";
             $result_insert_penerima = mysqli_query($koneksi, $query_insert_penerima);
@@ -343,7 +343,7 @@ if (isset($_POST['submit'])) {
 
 
 
-       
+
 
     }
 

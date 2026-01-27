@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // echo "Gagal menambahkan detail barang $kd_brg.<br>";
             }
 
-            // Update harga ke table barang 
+            // Update harga ke table barang
 
             if ($harga_pcs != 0) {
                 $check_barang_sql = "SELECT COUNT(*) AS count,
@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 hrg_satuan1_online,hrg_satuan2_online,hrg_satuan3_online,hrg_satuan4_online,hrg_satuan5_online,
                 hrg_satuan1_ms,hrg_satuan2_ms,hrg_satuan3_ms,hrg_satuan4_ms,hrg_satuan5_ms,
                 hrg_satuan1_mg,hrg_satuan2_mg,hrg_satuan3_mg,hrg_satuan4_mg,hrg_satuan5_mg,
-                hrg_satuan1_mp,hrg_satuan2_mp,hrg_satuan3_mp,hrg_satuan4_mp,hrg_satuan5_mp,qty_satuan1,qty_satuan2,qty_satuan3,qty_satuan4,qty_satuan5 
+                hrg_satuan1_mp,hrg_satuan2_mp,hrg_satuan3_mp,hrg_satuan4_mp,hrg_satuan5_mp,qty_satuan1,qty_satuan2,qty_satuan3,qty_satuan4,qty_satuan5
                  FROM barang WHERE kd_brg='$kd_brg'";
                 $check_barang_result = mysqli_query($koneksi, $check_barang_sql);
                 $check_barang_data = mysqli_fetch_assoc($check_barang_result);
@@ -193,23 +193,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $prefixes = '';
                                 break;
                         }
-                        $querysql1 = mysqli_query($koneksi, "SELECT 
+                        $querysql1 = mysqli_query($koneksi, "SELECT
                         IFNULL(layer1, 0) AS layer11,
-                        IFNULL(SUBSTRING_INDEX(layer2, '|', 1), 0) AS layer21, 
+                        IFNULL(SUBSTRING_INDEX(layer2, '|', 1), 0) AS layer21,
                         IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer2, '|', 2), '|', -1), 0) AS layer22,
-                        IFNULL(SUBSTRING_INDEX(layer3, '|', 1), 0) AS layer31,  
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer3, '|', 2), '|', -1), 0) AS layer32,  
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer3, '|', 3), '|', -1), 0) AS layer33, 
-                        IFNULL(SUBSTRING_INDEX(layer4, '|', 1), 0) AS layer41, 
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 2), '|', -1), 0) AS layer42, 
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 3), '|', -1), 0) AS layer43, 
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 4), '|', -1), 0) AS layer44,  
-                        IFNULL(SUBSTRING_INDEX(layer5, '|', 1), 0) AS layer51,  
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 2), '|', -1), 0) AS layer52, 
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 3), '|', -1), 0) AS layer53,  
-                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 4), '|', -1), 0) AS layer54,  
+                        IFNULL(SUBSTRING_INDEX(layer3, '|', 1), 0) AS layer31,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer3, '|', 2), '|', -1), 0) AS layer32,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer3, '|', 3), '|', -1), 0) AS layer33,
+                        IFNULL(SUBSTRING_INDEX(layer4, '|', 1), 0) AS layer41,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 2), '|', -1), 0) AS layer42,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 3), '|', -1), 0) AS layer43,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer4, '|', 4), '|', -1), 0) AS layer44,
+                        IFNULL(SUBSTRING_INDEX(layer5, '|', 1), 0) AS layer51,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 2), '|', -1), 0) AS layer52,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 3), '|', -1), 0) AS layer53,
+                        IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 4), '|', -1), 0) AS layer54,
                         IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(layer5, '|', 5), '|', -1), 0) AS layer55
-                    FROM kategori_nilai 
+                    FROM kategori_nilai
                     WHERE Nama_kategoriNilai = '$Nama_kategoriNilaiidkat' AND id_kat = $id_kat");
 
                         if ($s1 = mysqli_fetch_array($querysql1)) {
@@ -304,7 +304,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result_check = mysqli_query($koneksi, $query_check);
 
             if (mysqli_num_rows($result_check) > 0) {
-                $query_update = "UPDATE inventory SET 
+                $query_update = "UPDATE inventory SET
             stok = stok + ($jumlah * $jml_pcs)
             WHERE kd_cus = '$tujuan_kirim' AND kd_brg = '$kd_brg' ";
                 $result_update = mysqli_query($koneksi, $query_update);
@@ -315,8 +315,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 // Data belum ada, masukkan data baru
                 $query_insert = "INSERT INTO inventory (kd_cus,kd_brg,stok,satuan) VALUES (
-                '$tujuan_kirim', 
-                '$kd_brg',  
+                '$tujuan_kirim',
+                '$kd_brg',
                 '$jumlah' * '$jml_pcs',
                 'Pcs'
                  )";
@@ -354,20 +354,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // $harga_beli_terbaru = is_numeric($harga_beli_terbaru) ? $harga_beli_terbaru : 0;
 
 
-            $query_awal = "SELECT 
-        tgl AS tgl_terakhir, 
-          nilai_akhir AS nilai_awal, 
-          qt_akhir AS qty_awal, 
-          nilai_beli AS nilai_beli_sebelumnya, 
-          qty_beli AS qty_beli_sebelumnya, 
+            $query_awal = "SELECT
+        tgl AS tgl_terakhir,
+          nilai_akhir AS nilai_awal,
+          qt_akhir AS qty_awal,
+          nilai_beli AS nilai_beli_sebelumnya,
+          qty_beli AS qty_beli_sebelumnya,
           harga_rata ,
-          stok_opname, nilai_opname 
-          FROM 
-          mutasi_stok  
-          WHERE  
-          kd_cus = '$tujuan_kirim' AND kd_brg = '$kd_brg' 
-          ORDER BY 
-          tgl_terakhir DESC 
+          stok_opname, nilai_opname
+          FROM
+          mutasi_stok
+          WHERE
+          kd_cus = '$tujuan_kirim' AND kd_brg = '$kd_brg'
+          ORDER BY
+          tgl_terakhir DESC
           LIMIT 1";
             $result_awal = mysqli_query($koneksi, $query_awal);
 
@@ -433,7 +433,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (mysqli_num_rows($result_check) > 0) {
                 // Data sudah ada, update data yang ada dengan menjumlahkan banyak
-                $query_update = "UPDATE mutasi_stok SET 
+                $query_update = "UPDATE mutasi_stok SET
             qty_beli = qty_beli + ($jumlah * $jml_pcs),
             nilai_beli = nilai_beli + ($harga_pcs * ($jumlah * $jml_pcs)),
             qt_tersedia = qt_tersedia + ($jumlah * $jml_pcs),
@@ -453,23 +453,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 // Data belum ada, masukkan data baru
                 $query_insert = "INSERT INTO mutasi_stok (
-                    tgl, 
-                    kd_cus, 
-                    kd_brg, 
-                    satuan, 
-                    qty_awal, 
-                    nilai_awal, 
-                    qty_beli, 
-                    nilai_beli, 
-                    qt_tersedia, 
-                    nilai_tersedia, 
-                    qt_akhir, 
-                    nilai_akhir, 
-                    harga_rata
+                    tgl,
+                    kd_cus,
+                    kd_brg,
+                    satuan,
+                    qty_awal,
+                    nilai_awal,
+                    qty_beli,
+                    nilai_beli,
+                    qt_tersedia,
+                    nilai_tersedia,
+                    qt_akhir,
+                    nilai_akhir,
+                    harga_rata,refcode
                 ) VALUES (
-                    '$tanggal_invoice', 
-                    '$tujuan_kirim', 
-                    '$kd_brg',  
+                    '$tanggal_invoice',
+                    '$tujuan_kirim',
+                    '$kd_brg',
                     'Pcs',
                     '$qty_awal',
                     '$nilai_awal',
@@ -479,7 +479,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     ((('$jumlah' * '$jml_pcs') + '$qty_awal') * '$harga_pcs'),
                     (('$jumlah' * '$jml_pcs') + '$qty_awal'),
                     ((('$jumlah' * '$jml_pcs') + '$qty_awal') * '$harga_rata'),
-                    '$harga_rata'
+                    '$harga_rata','$no_invoice'
                 )";
 
 
