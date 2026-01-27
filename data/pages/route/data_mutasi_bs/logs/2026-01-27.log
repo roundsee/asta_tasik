@@ -56,3 +56,138 @@
           FROM user_login
           JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
           WHERE user_login.employee_number = 'WG0474'
+[09:17:29] [INFO]: cabang : 1316
+[09:17:29] [INFO]: employee : WG0474
+[09:17:33] [INFO]: mutasi bs tambah
+[09:17:33] [INFO]: Mutasi BS Tambah
+[09:17:33] [INFO]: Employee: WG0474
+[09:17:33] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[09:17:34] [INFO]: mutasi bs tambah
+[09:17:34] [INFO]: Mutasi BS Tambah
+[09:17:34] [INFO]: Employee: WG0474
+[09:17:34] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[09:33:28] [INFO]: cabang : 1316
+[09:33:28] [INFO]: employee : WG0474
+[11:59:45] [INFO]: cabang : 1316
+[11:59:45] [INFO]: employee : WG0474
+[11:59:48] [INFO]: mutasi bs tambah
+[11:59:48] [INFO]: Mutasi BS Tambah
+[11:59:48] [INFO]: Employee: WG0474
+[11:59:48] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[11:59:48] [INFO]: mutasi bs tambah
+[11:59:48] [INFO]: Mutasi BS Tambah
+[11:59:48] [INFO]: Employee: WG0474
+[11:59:48] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[05:00:07] [INFO]: Aksi mutasi
+[05:00:07] [INFO]: employee : WG0474
+[05:00:07] [INFO]: employee : Array
+[12:00:07] [INFO]: Route: mutasi_bs
+[12:00:07] [INFO]: act: input-baru
+[12:05:45] [INFO]: mutasi bs tambah
+[12:05:45] [INFO]: Mutasi BS Tambah
+[12:05:45] [INFO]: Employee: WG0474
+[12:05:45] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[12:05:45] [INFO]: aksi_mutasi_bs
+[12:05:45] [INFO]: mutasi_bs
+[05:06:03] [INFO]: Aksi mutasi
+[05:06:03] [INFO]: employee : WG0474
+[05:06:03] [INFO]: employee : Array
+[12:06:03] [INFO]: Route: mutasi_bs
+[12:06:03] [INFO]: act: input-baru
+[12:07:29] [INFO]: mutasi bs tambah
+[12:07:29] [INFO]: Mutasi BS Tambah
+[12:07:29] [INFO]: Employee: WG0474
+[12:07:29] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[12:07:29] [INFO]: aksi_mutasi_bs
+[12:07:29] [INFO]: mutasi_bs
+[05:07:40] [INFO]: Aksi mutasi
+[05:07:40] [INFO]: employee : WG0474
+[05:07:40] [INFO]: employee : Array
+[12:07:40] [INFO]: Route: mutasi_bs
+[12:07:40] [INFO]: act: input-baru
+[12:15:58] [INFO]: mutasi bs tambah
+[12:15:58] [INFO]: Mutasi BS Tambah
+[12:15:58] [INFO]: Employee: WG0474
+[12:15:58] [INFO]: SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[12:15:58] [INFO]: AKSI: aksi_mutasi_bs
+[12:15:58] [INFO]: RUTE : mutasi_bs
+[05:16:09] [INFO]: Aksi mutasi
+[05:16:09] [INFO]: employee : WG0474
+[05:16:09] [INFO]: employee : Array
+[12:16:09] [INFO]: Route: mutasi_bs
+[12:16:09] [INFO]: act: input-baru
+[2026-01-27 12:24:13] [INFO] cabang : 1316
+[2026-01-27 12:24:13] [INFO] employee : WG0474
+[2026-01-27 12:24:13] [INFO] post : Array
+[2026-01-27 12:24:14] [INFO] mutasi bs tambah
+[2026-01-27 12:24:14] [INFO] Mutasi BS Tambah
+[2026-01-27 12:24:14] [INFO] Employee: WG0474
+[2026-01-27 12:24:14] [INFO] SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[2026-01-27 12:24:14] [INFO] AKSI: aksi_mutasi_bs
+[2026-01-27 12:24:14] [INFO] RUTE : mutasi_bs
+[2026-01-27 12:24:15] [INFO] mutasi bs tambah
+[2026-01-27 12:24:15] [INFO] Mutasi BS Tambah
+[2026-01-27 12:24:15] [INFO] Employee: WG0474
+[2026-01-27 12:24:15] [INFO] SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[2026-01-27 12:24:15] [INFO] AKSI: aksi_mutasi_bs
+[2026-01-27 12:24:15] [INFO] RUTE : mutasi_bs
+[2026-01-27 05:24:32] [INFO] Aksi mutasi
+[2026-01-27 05:24:32] [INFO] employee : WG0474
+[2026-01-27 05:24:32] [INFO] employee : Array
+[2026-01-27 12:24:32] [INFO] Route: mutasi_bs
+[2026-01-27 12:24:32] [INFO] act: input-baru
+[2026-01-27 15:15:49] [INFO] file : mutasi_bs.php
+[2026-01-27 15:15:49] [INFO] cabang : 1316
+[2026-01-27 15:15:49] [INFO] employee : WG0474
+[2026-01-27 15:15:49] [INFO] POST
+[2026-01-27 15:15:49] [INFO] []
+[2026-01-27 15:15:51] [INFO] mutasi bs tambah
+[2026-01-27 15:15:51] [INFO] Mutasi BS Tambah
+[2026-01-27 15:15:51] [INFO] Employee: WG0474
+[2026-01-27 15:15:51] [INFO] SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[2026-01-27 15:15:51] [INFO] AKSI: aksi_mutasi_bs
+[2026-01-27 15:15:51] [INFO] RUTE : mutasi_bs
+[2026-01-27 15:15:51] [INFO] mutasi bs tambah
+[2026-01-27 15:15:51] [INFO] Mutasi BS Tambah
+[2026-01-27 15:15:51] [INFO] Employee: WG0474
+[2026-01-27 15:15:51] [INFO] SELECT user_login.kd_cus, pelanggan.nama AS nama_pelanggan
+          FROM user_login
+          JOIN pelanggan ON pelanggan.kd_cus = user_login.kd_cus
+          WHERE user_login.employee_number = 'WG0474'
+[2026-01-27 15:15:51] [INFO] AKSI: aksi_mutasi_bs
+[2026-01-27 15:15:51] [INFO] RUTE : mutasi_bs
+[2026-01-27 08:16:07] [INFO] Aksi mutasi
+[2026-01-27 08:16:07] [INFO] employee : WG0474
+[2026-01-27 08:16:07] [INFO] employee : Array
+[2026-01-27 15:16:07] [INFO] Route: mutasi_bs
+[2026-01-27 15:16:07] [INFO] act: input-baru

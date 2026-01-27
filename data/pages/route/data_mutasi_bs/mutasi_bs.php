@@ -76,8 +76,12 @@ $jr1 = 'No Rekening';
 $jr2 = 'Nama Bank';
 $jr3 = 'Atas Nama';
 $jr4 = 'Cat 1';
+write_log("file : mutasi_bs.php");
 write_log("cabang : " . $_SESSION['cabang_e']);
 write_log("employee : " . $_SESSION['employee_number']);
+write_log("POST");
+print_r($_POST);
+
 $cabang_e = $_SESSION['cabang_e'];
 $area_e = $_SESSION['area_e'];
 $en = $_SESSION['employee_number'];
@@ -404,6 +408,8 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
       </style>
 
     <?php
+
+
       break;
 
     //Form Tambah area

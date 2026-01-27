@@ -86,7 +86,7 @@ $employee = $_SESSION['employee_number'];
 
 write_log("Aksi mutasi");
 write_log("employee : " . $employee);
-
+write_log("POST DATA: " );
 if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 	echo "<link href='style.css' rel='stylesheet' type='text/css'>
 	<center>Untuk mengakses modul, Anda harus login <br>";
@@ -119,6 +119,7 @@ if (empty($_SESSION['username']) and empty($_SESSION['passuser'])) {
 
 		echo "<script>history.go(-1)</script>";
 	}
+
 
 	//Tambah
 	elseif ($route == $tujuan and $act == 'input') {

@@ -112,6 +112,11 @@ include '../header.php';
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+<?php 
+write_log("file:  mutasi_bs_tambah");
+write_log("AKSI: " . $aksi);
+write_log("RUTE : " . $rute);
+?>
 <div class="table-responsive">
   <form method="post" enctype="multipart/form-data" action="<?php echo $aksi; ?>.php?route=<?php echo $rute; ?>&act=input-baru">
 
